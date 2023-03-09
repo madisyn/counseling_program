@@ -28,14 +28,17 @@ public class Bank {
 		name.payMonthlyExpense(month);
 	}
 	
-	/*public <T> void receivePayment(T name) {
-		this.total += name.paymentAmount;
-		name.paid = true;
-	}*/
-	
 	public void voidInternPayment(Intern name, int month) {
 		Bank.total -= name.paymentAmount;
-		name.payMonthlyExpense(month);
+		name.voidMonthlyExpense(month);
+	}
+	
+	public void voidReceivePayment(Client name, int month, int week) {
+		//receive money from Client
+		Bank.total -= name.paymentAmount;
+		
+		//mark the Client did pay fee
+		name.voidExpense(month, week);
 	}
 
 }

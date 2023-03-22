@@ -21,8 +21,27 @@ public class Staff {
 		internList.add(name);		
 	}
 	
-public void addClient(Client name) {
-		clientList.add(name);
+	public void deleteIntern(Intern name) {
+		for(int i=0; i<internList.size(); i++) {
+			if(internList.get(i)== name) {
+				internList.remove(name);
+			}
+		}
+				
+	}
+	
+	
+	public void addClient(Client name) {
+			clientList.add(name);
+	
 	}
 
+	public void deleteClient(Client name) {
+		for(int i=0; i<internList.size(); i++) {
+			if(clientList.get(i)== name) {
+				clientList.remove(name);
+			}
+		}
+	}
+	
 }

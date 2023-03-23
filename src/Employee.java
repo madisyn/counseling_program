@@ -8,9 +8,9 @@ public class Employee {
 	boolean paid[] = new boolean[11];
 	
 
-	public Employee(String name, int Salary) {
+	public Employee(String name, int HourlyRate) {
 		this.name = name;
-		this.MonthlySalary = Salary/12;
+		this.MonthlySalary = HourlyRate*40;
 		this.workType = "Hourly";
 		this.hoursPerWeek = 0;
 		for(int i=0; i<paid.length; i++) {
@@ -30,8 +30,42 @@ public class Employee {
 	
 	public void receiveIncome(int month) {
 		//try/catch if the number is a month
-		paid[month] = true;
+		if(paid[month]==false) {
+			paid[month] = true;
+		}
+		else {
+			System.out.println("Employee has already been paid.  Please check records");
+		}
 		
+		
+	}
+	
+	public void addHours(int hours) {
+		if(this.workType!="Hourly") {
+			System.out.println("Employee is not paid hourly.  Please check their file");
+		}
+		else {
+			this.hoursPerWeek+=hours;
+			this.checkHours();
+		}
+	}
+	
+	public void deleteHours(int hours) {
+		if(this.workType!="Hourly") {
+			System.out.println("Employee is not paid hourly.  Please check their file");
+		}
+		else {
+			this.hoursPerWeek-=hours;
+		}
+	}
+	
+	public void checkHours() {
+		if(this.hoursPerWeek>40) {
+			System.out.println("Hours exceeded 40 for the week!  Please check with supervisor");
+		}
+		if(this.hoursPerWeek>35 && this.hoursPerWeek<40) {
+			System.out.println("Hours close to 40.  Target hours per week is 40");
+		}
 	}
 
 }

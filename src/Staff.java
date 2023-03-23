@@ -4,7 +4,7 @@ public class Staff extends Employee{
 	private ArrayList<Client> clientList;
 	
 	public Staff(String name, int Salary) {
-		super(name, Salary);
+		super(name,"Staff", Salary);
 		internList = new ArrayList<Intern>();
 		clientList = new ArrayList<Client>();
 	}

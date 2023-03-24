@@ -6,13 +6,33 @@ public class Client {
 	String name;
 	int paymentAmount =150;
 	boolean paid[][] = new boolean[12][4];
-	Intern InternName;
+	String CounselorName;
+	boolean isIntern = true;
 	
 
-	public Client(String name, int Expense, Intern inName) {
+	public Client(String name, int Expense, Intern in) {
 		this.name = name;
 		this.paymentAmount = Expense;
-		this.InternName = inName;
+		this.CounselorName = in.name;
+		
+		for(int i=0; i<12; i++) {
+			for(int j=0; i<4; j++) {
+				this.paid[i][j] = false;
+			}
+		}
+	}
+	
+	public Client(String name, int Expense, Staff staff) {
+		this.name = name;
+		this.paymentAmount = Expense;
+		this.CounselorName = staff.name;
+		this.isIntern = false;
+		
+		for(int i=0; i<12; i++) {
+			for(int j=0; j<4; j++) {
+				this.paid[i][j] = false;
+			}
+		}
 	}
 	
 	public void payExpense(int month, int week) {
@@ -24,4 +44,10 @@ public class Client {
 		paid[month][week] = false;
 	}
 	
+	public boolean checkPaymentMonthWeek(int month, int week) {
+		if(this.paid[month][week]==true) {
+			return true;
+		}
+		return false;
+	}
 }

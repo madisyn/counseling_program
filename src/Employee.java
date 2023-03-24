@@ -28,14 +28,17 @@ public class Employee {
 		}
 	}
 	
-	public void receiveIncome(int month) {
+	public boolean receiveIncome(int month) {
 		//try/catch if the number is a month
-		if(paid[month]==false) {
-			paid[month] = true;
-		}
-		else {
+		if(paid[month]!=false) {
 			System.out.println("Employee has already been paid.  Please check records");
+			return false;
 		}
+			
+			paid[month] = true;
+			return true;
+		
+		
 		
 		
 	}
@@ -66,6 +69,14 @@ public class Employee {
 		if(this.hoursPerWeek>35 && this.hoursPerWeek<40) {
 			System.out.println("Hours close to 40.  Target hours per week is 40");
 		}
+	}
+	
+	//***************add a check to make sure it falls within the months and doesn't go outside of boundary
+	public boolean checkPaymentMonth(int month) {
+		if(this.paid[month]==true) {
+			return true;
+		}
+		return false;
 	}
 
 }

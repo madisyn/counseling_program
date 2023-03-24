@@ -31,6 +31,13 @@ public class Intern {
 	}
 	
 	public void changeSupervisor(Staff name) {
-		//************************
+		this.supervisor = name;
+	}
+	
+	public boolean checkPaymentMonth(int month) {
+		if(this.paid[month]==true) {
+			return true;
+		}
+		return false;
 	}
 }

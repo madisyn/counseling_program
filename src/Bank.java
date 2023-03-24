@@ -1,14 +1,16 @@
 
 public class Bank {
 	
-	static int total;
+	int total;
+	String name;
 	
-	public Bank (int num){
-		Bank.total = num;
+	public Bank (String name, int num){
+		this.name = name;
+		this.total = num;
 	}
 	
 	public void payEmployees(Employee name, int month) {
-		Bank.total -= name.MonthlySalary;
+		this.total -= name.MonthlySalary;
 		name.receiveIncome(month);
 	}
 	
@@ -17,7 +19,7 @@ public class Bank {
 	 */
 	public void receivePayment(Client name, int month, int week) {
 		//receive money from Client
-		Bank.total += name.paymentAmount;
+		this.total += name.paymentAmount;
 		
 		//mark the Client did pay fee
 		name.payExpense(month, week);
@@ -28,7 +30,7 @@ public class Bank {
 	 */
 	public void receivePayment(Intern name, int month) {
 		//receive money from Intern
-		Bank.total += name.paymentAmount;
+		this.total += name.paymentAmount;
 		
 		//mark that the intern did pay fee for that month
 		name.payMonthlyExpense(month);
@@ -39,7 +41,7 @@ public class Bank {
 	 * This is to void a payment due to any errors for Interns
 	 */
 	public void voidInternPayment(Intern name, int month) {
-		Bank.total -= name.paymentAmount;
+		this.total -= name.paymentAmount;
 		name.voidMonthlyExpense(month);
 	}
 	
@@ -48,10 +50,17 @@ public class Bank {
 	 */
 	public void voidReceivePayment(Client name, int month, int week) {
 		//receive money from Client
-		Bank.total -= name.paymentAmount;
+		this.total -= name.paymentAmount;
 		
 		//mark the Client did pay fee
 		name.voidExpense(month, week);
+	}
+	
+	public boolean BankPaymentCheck(int number) {
+		if(number<this.total) {
+			return true;
+		}
+		return false;
 	}
 
 }

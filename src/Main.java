@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
 	}
 	/*
 	 * Will check if employee was already paid if not then will check if bank has enough money
@@ -36,16 +36,34 @@ public class Main {
 		}
 	}
 	
-	public void receiveFromClient(){
-		
+	public static void receiveFromClient(Client name, Bank bank, int month, int week){
+		if(!name.checkPaymentMonthWeek(month, week)) {
+			bank.receivePayment(name, month, week);
+			System.out.println("Client " + name.name + " payment received");
+		}
+		else {
+			System.out.println("Client " +name.name +" has already made a payment for month: " + month + ", week: " + week +  ". Please select a correct month and week");
+		}
 	}
 	
-	public void voidClient() {
-		
+	public static void voidClient(Client name, Bank bank, int month, int week) {
+		if(name.checkPaymentMonthWeek(month, week) == true) {
+			name.voidExpense(month, week);
+			System.out.println("Payment for client " + name.name + " on month: " + month + " week: " + week + " voided.");
+		}
+		else {
+			System.out.println("Payment was never made for month: "+ month + ", week: " + week + ". Please select a correct month and week");
+		}
 	}
 	
-	public void voidIntern() {
-		
+	public static void voidIntern(Intern name, Bank bank, int month) {
+		if(name.checkPaymentMonth(month) == true) {
+			name.voidMonthlyExpense(month);
+			System.out.println("Payment for client " + name.name + " on month: " + month + " voided.");
+		}
+		else {
+			System.out.println("Payment was never made for month: "+ month +  ". Please select a correct month");
+		}
 	}
 	
 	public static void printStaffClients(Staff name) {

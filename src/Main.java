@@ -13,7 +13,6 @@ public class Main {
 				ArrayList<Client> clientList = new ArrayList<Client>();
 				Bank bank1 = new Bank("Name", 250000);
 				
-				
 			
 		
 	}
@@ -131,6 +130,70 @@ public class Main {
 		}
 	}
 	
+	public static boolean checkStaffList(ArrayList<Staff> staffList, String name) {
+		for(int i=0; i<staffList.size(); i++) {
+			if(staffList.get(i).name.equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static Staff returnStaffMember(ArrayList<Staff> staffList, String name) {
+		for(int i=0; i<staffList.size(); i++) {
+			if(staffList.get(i).name.equals(name)) {
+				return staffList.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList) {
+		Intern newIntern;
+		//enter name and other stuff to create the employee
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.print("New Intern name: ");
+		String internName = scanner.nextLine();
+		
+		System.out.print("Staff Supervisor Name: ");
+		String StaffName = scanner.nextLine();
+		
+		//verify if StaffName is an actual staff member
+		while(!checkStaffList(staffList, StaffName)) {
+			System.out.println("Staff is not in directory.  Enter staff member");
+			StaffName = scanner.nextLine();
+		}
+		
+		System.out.print("Modified Expense? (yes or no): ");
+		String answer = scanner.nextLine();
+		
+		//verify if modified expense or not
+		while(!(answer.contains("yes") || answer.contains("no"))) {
+			System.out.println("Modified Expense? (please type \"yes\" or \"no\"): ");
+			answer = scanner.nextLine();
+		}
+		
+		
+		if(answer.equals("yes")){
+			System.out.print("Modified Expense amount: ");
+			int modification = scanner.nextInt();
+			newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
+		}
+		else {
+			newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
+		}
+		
+		internList.add(newIntern);
+		
+	}
+	public static void printInternList(ArrayList<Intern> internList) {
+		for(int i=0; i<internList.size(); i++) {
+			System.out.println("Name: " + internList.get(i).name);
+			System.out.println("Supervisor: " + internList.get(i).supervisor.name);
+			System.out.println("Monthly Expense: " + internList.get(i).paymentAmount);
+		}
+	}
 
 
 }

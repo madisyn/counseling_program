@@ -6,7 +6,15 @@ public class Main {
 	static Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		
+		// TODO Auto-generated method stub
+				ArrayList<Employee> employeeList = new ArrayList<Employee>();
+				ArrayList<Staff> staffList = new ArrayList<Staff>();
+				ArrayList<Intern> internList = new ArrayList<Intern>();
+				ArrayList<Client> clientList = new ArrayList<Client>();
+				Bank bank1 = new Bank("Name", 250000);
+				
+				
+			
 		
 	}
 	/*
@@ -87,10 +95,11 @@ public class Main {
 	
 	public static void addEmployee(ArrayList<Employee> employeeList) {
 		//enter name and other stuff to create the employee
+		Scanner scanner = new Scanner(System.in);
 		System.out.print("name: ");
-		String name = scan.nextLine();
+		String name = scanner.nextLine();
 		System.out.print("Hourly Rate: ");
-		int rate = scan.nextInt();
+		int rate = scanner.nextInt();
 		Employee newEmployee = new Employee(name, rate);
 		employeeList.add(newEmployee);
 	}
@@ -102,5 +111,26 @@ public class Main {
 			System.out.println("Hourly Rate: " + employeeList.get(i).HourlyWage);
 		}
 	}
+	
+	public static void addStaff(ArrayList<Staff> staffList) {
+		//enter name and other stuff to create the employee
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("name: ");
+		String name = scanner.nextLine();
+		System.out.print("Salary: ");
+		int salary = scanner.nextInt();
+		Staff newStaff = new Staff(name, salary);
+		staffList.add(newStaff);
+	}
+	
+	public static void printStaffList(ArrayList<Staff> staffList) {
+		for(int i=0; i<staffList.size(); i++) {
+			System.out.println("name: " + staffList.get(i).name);
+			System.out.println("work type: " + staffList.get(i).workType);
+			System.out.println("Monthly Salary: " + staffList.get(i).Salary);
+		}
+	}
+	
+
 
 }

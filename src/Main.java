@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Main {
+	static Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	/*
@@ -71,6 +74,32 @@ public class Main {
 		clientList = name.getClientList();
 		for(int i=0; i<clientList.size(); i++) {
 			System.out.println("check: " + clientList.get(i).name);
+		}
+	}
+	
+	public static void printInternClients(Intern name) {
+		ArrayList<Client> clientList = new ArrayList<>();
+		clientList = name.getClientList();
+		for(int i=0; i<clientList.size(); i++) {
+			System.out.println("check: " + clientList.get(i).name);
+		}
+	}
+	
+	public static void addEmployee(ArrayList<Employee> employeeList) {
+		//enter name and other stuff to create the employee
+		System.out.print("name: ");
+		String name = scan.nextLine();
+		System.out.print("Hourly Rate: ");
+		int rate = scan.nextInt();
+		Employee newEmployee = new Employee(name, rate);
+		employeeList.add(newEmployee);
+	}
+	
+	public static void printEmployeeList(ArrayList<Employee> employeeList) {
+		for(int i=0; i<employeeList.size(); i++) {
+			System.out.println("name: " + employeeList.get(i).name);
+			System.out.println("work type: " + employeeList.get(i).workType);
+			System.out.println("Hourly Rate: " + employeeList.get(i).HourlyWage);
 		}
 	}
 

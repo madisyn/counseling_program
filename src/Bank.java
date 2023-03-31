@@ -62,5 +62,9 @@ public class Bank {
 		}
 		return false;
 	}
+	
+	public int returnBankBalance() {
+		return this.total;
+	}
 
 }

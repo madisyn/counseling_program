@@ -5,11 +5,14 @@ public class Employee {
 	String workType;
 	int MonthlySalary;
 	int hoursPerWeek;
+	int Salary =-1;
+	int HourlyWage=-1;
 	boolean paid[] = new boolean[11];
 	
 
 	public Employee(String name, int HourlyRate) {
 		this.name = name;
+		this.HourlyWage = HourlyRate;
 		this.MonthlySalary = HourlyRate*40;
 		this.workType = "Hourly";
 		this.hoursPerWeek = 0;
@@ -20,6 +23,7 @@ public class Employee {
 	
 	public Employee(String name, String workingType, int Salary) {
 		this.name = name;
+		this.Salary = Salary;
 		this.MonthlySalary = Salary/12;
 		this.workType = workingType;
 		this.hoursPerWeek = 40;
@@ -71,9 +75,12 @@ public class Employee {
 		}
 	}
 	
-	//***************add a check to make sure it falls within the months and doesn't go outside of boundary
+	public void changeHourlyRate(int hourlyRate) {
+		this.HourlyWage = hourlyRate;
+	}
+	
 	public boolean checkPaymentMonth(int month) {
-		if(this.paid[month]==true) {
+		if(this.paid[month]==true  && month>0 && month <=12) {
 			return true;
 		}
 		return false;

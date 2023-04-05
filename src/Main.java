@@ -279,6 +279,12 @@ public class Main {
 	public static void checkStaffList() {
 		
 	}
+	
+	//BANK FUNCTIONS
+	
+	public static void getBankTotal() {
+		
+	}
 
 
 }

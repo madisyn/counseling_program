@@ -20,11 +20,21 @@ public class Main {
 		
 	//EMPLOYEE FUNCTIONS
 	
+	public static void addEmployee(ArrayList<Employee> employeeList, String name, int rate) {
+		Employee newEmployee = new Employee(name, rate);
+		employeeList.add(newEmployee);
+	}
+	
+	public static void deleteEmployee() {
+		
+	}
+	
+	
 	/*
 	 * Will check if employee was already paid if not then will check if bank has enough money
 	 * if the bank has enough money then money will be given to employee
 	 */
-	public static void PayEmployee(Employee name, Bank bank, int Month) {
+	public static void payEmployee(Employee name, Bank bank, int Month) {
 		
 		if(bank.BankPaymentCheck(name.MonthlySalary) && (name.checkPaymentMonth(Month))){
 			bank.payEmployees(name, Month);
@@ -40,11 +50,19 @@ public class Main {
 		
 	}
 	
-	
-	public static void addEmployee(ArrayList<Employee> employeeList, String name, int rate) {
-		Employee newEmployee = new Employee(name, rate);
-		employeeList.add(newEmployee);
+	public static void changeEmployeeHourlyRate() {
+		
 	}
+	
+	public static void recordHours() {
+		
+	}
+	
+	
+	public static void restartHours() {
+		
+	}
+
 	
 	public static void printEmployeeList(ArrayList<Employee> employeeList) {
 		for(int i=0; i<employeeList.size(); i++) {
@@ -54,6 +72,10 @@ public class Main {
 		}
 	}
 	
+	public static void checkEmployeeList() {
+		
+	}
+	
 	//STAFF FUNCTIONS
 	
 	public static void addStaff(ArrayList<Staff> staffList, String name, int salary) {
@@ -61,7 +83,24 @@ public class Main {
 		staffList.add(newStaff);
 	}
 	
-	public static void printStaffList(ArrayList<Staff> staffList) {
+	public static void deleteStaff() {
+		
+	}
+	
+	public static void deleteStaffClient() {
+		
+	}
+	
+	public static void addStaffClient() {
+		
+	}
+	
+	public static void changeStaffSalary() {
+		
+	}
+	
+
+		public static void printStaffList(ArrayList<Staff> staffList) {
 		for(int i=0; i<staffList.size(); i++) {
 			System.out.println("name: " + staffList.get(i).name);
 			System.out.println("work type: " + staffList.get(i).workType);
@@ -69,13 +108,12 @@ public class Main {
 		}
 	}
 	
-	public static boolean checkStaffList(ArrayList<Staff> staffList, String name) {
-		for(int i=0; i<staffList.size(); i++) {
-			if(staffList.get(i).name.equals(name)) {
-				return true;
-			}
+	public static void printStaffClients(Staff name) {
+		ArrayList<Client> clientList = new ArrayList<>();
+		clientList = name.getClientList();
+		for(int i=0; i<clientList.size(); i++) {
+			System.out.println("check: " + clientList.get(i).name);
 		}
-		return false;
 	}
 	
 	public static Staff returnStaffMember(ArrayList<Staff> staffList, String name) {
@@ -85,14 +123,16 @@ public class Main {
 			}
 		}
 		return null;
-	}
+	}	
 	
-	public static void printStaffClients(Staff name) {
-		ArrayList<Client> clientList = new ArrayList<>();
-		clientList = name.getClientList();
-		for(int i=0; i<clientList.size(); i++) {
-			System.out.println("check: " + clientList.get(i).name);
+	
+	public static boolean checkStaffList(ArrayList<Staff> staffList, String name) {
+		for(int i=0; i<staffList.size(); i++) {
+			if(staffList.get(i).name.equals(name)) {
+				return true;
+			}
 		}
+		return false;
 	}
 	
 	//INTERN FUNCTIONS
@@ -183,6 +223,10 @@ public class Main {
 		}
 	}
 	
+	public static void checkInternList() {
+		
+	}
+	
 
 	
 	
@@ -232,6 +276,9 @@ public class Main {
 		
 	}
 	
+	public static void checkStaffList() {
+		
+	}
 
 
 }

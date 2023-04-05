@@ -16,35 +16,10 @@ public class Main {
 			
 		
 	}
-	/*
-	 * Will check if employee was already paid if not then will check if bank has enough money
-	 * if the bank has enough money then money will be given to employee
-	 */
-	public static void PayEmployee(Employee name, Bank bank, int Month) {
-		
-		if(bank.BankPaymentCheck(name.MonthlySalary) && (name.checkPaymentMonth(Month))){
-			bank.payEmployees(name, Month);
-			System.out.println(name.name + " was paid $" + name.MonthlySalary);
-			System.out.println(name.paid[Month]);
-		}
-		else if(!bank.BankPaymentCheck(name.MonthlySalary)) {
-			System.out.println("Bank does not have enough funds.  Please talk to manager");
-		}
-		else if(name.paid[Month] == true) {
-			System.out.println("Employee was already paid for this month.  Please talk to a mangaer");
-		}
-		
-	}
+
 	
-	public static void receiveFromIntern(Intern name, Bank bank, int month){
-		if(!name.checkPaymentMonth(month)) {
-			bank.receivePayment(name, month);
-			System.out.println("Intern " + name.name + " payment received");
-		}
-		else {
-			System.out.println("Intern " +name.name +" has already made a payment for this month.  Please select a correct month");
-		}
-	}
+	
+	//CLIENT FUNCTIONS
 	
 	public static void receiveFromClient(Client name, Bank bank, int month, int week){
 		if(!name.checkPaymentMonthWeek(month, week)) {
@@ -66,39 +41,34 @@ public class Main {
 		}
 	}
 	
-	public static void voidIntern(Intern name, Bank bank, int month) {
-		if(name.checkPaymentMonth(month) == true) {
-			name.voidMonthlyExpense(month);
-			System.out.println("Payment for client " + name.name + " on month: " + month + " voided.");
+	
+	
+
+	
+	//EMPLOYEE FUNCTIONS
+	
+	/*
+	 * Will check if employee was already paid if not then will check if bank has enough money
+	 * if the bank has enough money then money will be given to employee
+	 */
+	public static void PayEmployee(Employee name, Bank bank, int Month) {
+		
+		if(bank.BankPaymentCheck(name.MonthlySalary) && (name.checkPaymentMonth(Month))){
+			bank.payEmployees(name, Month);
+			System.out.println(name.name + " was paid $" + name.MonthlySalary);
+			System.out.println(name.paid[Month]);
 		}
-		else {
-			System.out.println("Payment was never made for month: "+ month +  ". Please select a correct month");
+		else if(!bank.BankPaymentCheck(name.MonthlySalary)) {
+			System.out.println("Bank does not have enough funds.  Please talk to manager");
 		}
+		else if(name.paid[Month] == true) {
+			System.out.println("Employee was already paid for this month.  Please talk to a mangaer");
+		}
+		
 	}
 	
-	public static void printStaffClients(Staff name) {
-		ArrayList<Client> clientList = new ArrayList<>();
-		clientList = name.getClientList();
-		for(int i=0; i<clientList.size(); i++) {
-			System.out.println("check: " + clientList.get(i).name);
-		}
-	}
 	
-	public static void printInternClients(Intern name) {
-		ArrayList<Client> clientList = new ArrayList<>();
-		clientList = name.getClientList();
-		for(int i=0; i<clientList.size(); i++) {
-			System.out.println("check: " + clientList.get(i).name);
-		}
-	}
-	
-	public static void addEmployee(ArrayList<Employee> employeeList) {
-		//enter name and other stuff to create the employee
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("name: ");
-		String name = scanner.nextLine();
-		System.out.print("Hourly Rate: ");
-		int rate = scanner.nextInt();
+	public static void addEmployee(ArrayList<Employee> employeeList, String name, int rate) {
 		Employee newEmployee = new Employee(name, rate);
 		employeeList.add(newEmployee);
 	}
@@ -111,13 +81,9 @@ public class Main {
 		}
 	}
 	
-	public static void addStaff(ArrayList<Staff> staffList) {
-		//enter name and other stuff to create the employee
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("name: ");
-		String name = scanner.nextLine();
-		System.out.print("Salary: ");
-		int salary = scanner.nextInt();
+	//STAFF FUNCTIONS
+	
+	public static void addStaff(ArrayList<Staff> staffList, String name, int salary) {
 		Staff newStaff = new Staff(name, salary);
 		staffList.add(newStaff);
 	}
@@ -148,42 +114,42 @@ public class Main {
 		return null;
 	}
 	
-	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList) {
+	public static void printStaffClients(Staff name) {
+		ArrayList<Client> clientList = new ArrayList<>();
+		clientList = name.getClientList();
+		for(int i=0; i<clientList.size(); i++) {
+			System.out.println("check: " + clientList.get(i).name);
+		}
+	}
+	
+	//INTERN FUNCTIONS
+	
+	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList, String internName, String StaffName) {
 		Intern newIntern;
-		//enter name and other stuff to create the employee
-		Scanner scanner = new Scanner(System.in);
-		
-		System.out.print("New Intern name: ");
-		String internName = scanner.nextLine();
-		
-		System.out.print("Staff Supervisor Name: ");
-		String StaffName = scanner.nextLine();
 		
 		//verify if StaffName is an actual staff member
-		while(!checkStaffList(staffList, StaffName)) {
+		if(!checkStaffList(staffList, StaffName)) {
 			System.out.println("Staff is not in directory.  Enter staff member");
-			StaffName = scanner.nextLine();
-		}
+		}		
 		
-		System.out.print("Modified Expense? (yes or no): ");
-		String answer = scanner.nextLine();
+		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
+		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
+
+		internList.add(newIntern);
 		
-		//verify if modified expense or not
-		while(!(answer.contains("yes") || answer.contains("no"))) {
-			System.out.println("Modified Expense? (please type \"yes\" or \"no\"): ");
-			answer = scanner.nextLine();
-		}
+	}
+	
+	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList, String internName, String StaffName, int modification) {
+		Intern newIntern;
 		
+		//verify if StaffName is an actual staff member
+		if(!checkStaffList(staffList, StaffName)) {
+			System.out.println("Staff is not in directory.  Enter staff member");
+		}		
 		
-		if(answer.equals("yes")){
-			System.out.print("Modified Expense amount: ");
-			int modification = scanner.nextInt();
-			newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
-		}
-		else {
-			newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
-		}
-		
+		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
+		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
+
 		internList.add(newIntern);
 		
 	}
@@ -192,6 +158,34 @@ public class Main {
 			System.out.println("Name: " + internList.get(i).name);
 			System.out.println("Supervisor: " + internList.get(i).supervisor.name);
 			System.out.println("Monthly Expense: " + internList.get(i).paymentAmount);
+		}
+	}
+	
+	public static void printInternClients(Intern name) {
+		ArrayList<Client> clientList = new ArrayList<>();
+		clientList = name.getClientList();
+		for(int i=0; i<clientList.size(); i++) {
+			System.out.println("check: " + clientList.get(i).name);
+		}
+	}
+	
+	public static void voidIntern(Intern name, Bank bank, int month) {
+		if(name.checkPaymentMonth(month) == true) {
+			name.voidMonthlyExpense(month);
+			System.out.println("Payment for client " + name.name + " on month: " + month + " voided.");
+		}
+		else {
+			System.out.println("Payment was never made for month: "+ month +  ". Please select a correct month");
+		}
+	}
+	
+	public static void receiveFromIntern(Intern name, Bank bank, int month){
+		if(!name.checkPaymentMonth(month)) {
+			bank.receivePayment(name, month);
+			System.out.println("Intern " + name.name + " payment received");
+		}
+		else {
+			System.out.println("Intern " +name.name +" has already made a payment for this month.  Please select a correct month");
 		}
 	}
 

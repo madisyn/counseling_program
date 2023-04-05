@@ -124,6 +124,49 @@ public class Main {
 		internList.add(newIntern);
 		
 	}
+	
+	public static void deleteIntern() {
+		
+	}
+	
+	
+	public static void AddInternClient() {
+		
+	}
+	
+	public static void deleteInternClient() {
+		
+	}
+	
+	public static void InternChangeSupervisor() {
+		
+	}
+	
+	public static void receiveFromIntern(Intern name, Bank bank, int month){
+		if(!name.checkPaymentMonth(month)) {
+			bank.receivePayment(name, month);
+			System.out.println("Intern " + name.name + " payment received");
+		}
+		else {
+			System.out.println("Intern " +name.name +" has already made a payment for this month.  Please select a correct month");
+		}
+	}
+	
+	public static void voidIntern(Intern name, Bank bank, int month) {
+		if(name.checkPaymentMonth(month) == true) {
+			name.voidMonthlyExpense(month);
+			System.out.println("Payment for client " + name.name + " on month: " + month + " voided.");
+		}
+		else {
+			System.out.println("Payment was never made for month: "+ month +  ". Please select a correct month");
+		}
+	}	
+	
+	public static void changeInternFee() {
+		
+	}
+	
+	
 	public static void printInternList(ArrayList<Intern> internList) {
 		for(int i=0; i<internList.size(); i++) {
 			System.out.println("Name: " + internList.get(i).name);
@@ -140,25 +183,9 @@ public class Main {
 		}
 	}
 	
-	public static void voidIntern(Intern name, Bank bank, int month) {
-		if(name.checkPaymentMonth(month) == true) {
-			name.voidMonthlyExpense(month);
-			System.out.println("Payment for client " + name.name + " on month: " + month + " voided.");
-		}
-		else {
-			System.out.println("Payment was never made for month: "+ month +  ". Please select a correct month");
-		}
-	}
+
 	
-	public static void receiveFromIntern(Intern name, Bank bank, int month){
-		if(!name.checkPaymentMonth(month)) {
-			bank.receivePayment(name, month);
-			System.out.println("Intern " + name.name + " payment received");
-		}
-		else {
-			System.out.println("Intern " +name.name +" has already made a payment for this month.  Please select a correct month");
-		}
-	}
+	
 	
 	//CLIENT FUNCTIONS
 	

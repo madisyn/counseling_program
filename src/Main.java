@@ -17,34 +17,7 @@ public class Main {
 		
 	}
 
-	
-	
-	//CLIENT FUNCTIONS
-	
-	public static void receiveFromClient(Client name, Bank bank, int month, int week){
-		if(!name.checkPaymentMonthWeek(month, week)) {
-			bank.receivePayment(name, month, week);
-			System.out.println("Client " + name.name + " payment received");
-		}
-		else {
-			System.out.println("Client " +name.name +" has already made a payment for month: " + month + ", week: " + week +  ". Please select a correct month and week");
-		}
-	}
-	
-	public static void voidClient(Client name, Bank bank, int month, int week) {
-		if(name.checkPaymentMonthWeek(month, week) == true) {
-			name.voidExpense(month, week);
-			System.out.println("Payment for client " + name.name + " on month: " + month + " week: " + week + " voided.");
-		}
-		else {
-			System.out.println("Payment was never made for month: "+ month + ", week: " + week + ". Please select a correct month and week");
-		}
-	}
-	
-	
-	
-
-	
+		
 	//EMPLOYEE FUNCTIONS
 	
 	/*
@@ -133,7 +106,6 @@ public class Main {
 		}		
 		
 		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
-		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
 
 		internList.add(newIntern);
 		
@@ -147,7 +119,6 @@ public class Main {
 			System.out.println("Staff is not in directory.  Enter staff member");
 		}		
 		
-		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
 		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
 
 		internList.add(newIntern);
@@ -188,6 +159,52 @@ public class Main {
 			System.out.println("Intern " +name.name +" has already made a payment for this month.  Please select a correct month");
 		}
 	}
+	
+	//CLIENT FUNCTIONS
+	
+	public static void addClient() {
+		
+	}
+	
+	
+	public static void deleteClient() {
+		
+		
+	}
+	
+	public static void ClientChangeTherapist() {
+		
+	}
+	
+	
+	public static void receiveFromClient(Client name, Bank bank, int month, int week){
+		if(!name.checkPaymentMonthWeek(month, week)) {
+			bank.receivePayment(name, month, week);
+			System.out.println("Client " + name.name + " payment received");
+		}
+		else {
+			System.out.println("Client " +name.name +" has already made a payment for month: " + month + ", week: " + week +  ". Please select a correct month and week");
+		}
+	}
+	
+	public static void voidClient(Client name, Bank bank, int month, int week) {
+		if(name.checkPaymentMonthWeek(month, week) == true) {
+			name.voidExpense(month, week);
+			System.out.println("Payment for client " + name.name + " on month: " + month + " week: " + week + " voided.");
+		}
+		else {
+			System.out.println("Payment was never made for month: "+ month + ", week: " + week + ". Please select a correct month and week");
+		}
+	}
+	
+	public static void clientChangeFee() {
+		
+	}
+	
+	public static void printClientList() {
+		
+	}
+	
 
 
 }

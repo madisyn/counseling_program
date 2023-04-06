@@ -11,7 +11,7 @@ public class Main {
 				ArrayList<Client> clientList = new ArrayList<Client>();
 				Bank bank1 = new Bank("Name", 250000);
 				
-				/*addEmployee(employeeList, "Justin", 50);
+				addEmployee(employeeList, "Justin", 50);
 				addEmployee(employeeList, "Chris", 50);
 				addEmployee(employeeList, "Sandra", 50);
 				
@@ -27,7 +27,25 @@ public class Main {
 				
 				printEmployeeList(employeeList);
 				
-			*/
+				recordEmployeeHours(employeeList, "Chris", 8);
+				printEmployeeList(employeeList);
+				recordEmployeeHours(employeeList, "Chris", 8);
+				recordEmployeeHours(employeeList, "Chris", 8);
+				recordEmployeeHours(employeeList, "Chris", 8);
+				printEmployeeList(employeeList);
+				
+				restartEmployeeWeeklyHours(employeeList, "Chris");
+				
+				printEmployeeList(employeeList);
+				
+				recordEmployeeHours(employeeList, "Chris", 8);
+				printEmployeeList(employeeList);
+				
+				
+				
+				
+				
+			
 		
 	}
 
@@ -87,13 +105,38 @@ public class Main {
 		
 	}
 	
-	public static void recordHours() {
+	public static void recordEmployeeHours(ArrayList<Employee> employeeList, String EmployeeName, int hours) {
+		int index = returnEmployeeIndex(employeeList, EmployeeName);
 		
+		if(index != -1) {
+			employeeList.get(index).addHours(hours);
+		}
+		else {
+			System.out.println("Employee does not exist.  Please Enter a valid employee");
+		}
 	}
 	
 	
-	public static void restartHours() {
+	public static void restartEmployeeWeeklyHours(ArrayList<Employee> employeeList, String EmployeeName) {
+		int index = returnEmployeeIndex(employeeList, EmployeeName);
 		
+		if(index != -1) {
+			employeeList.get(index).restartHours();
+		}
+		else {
+			System.out.println("Employee does not exist.  Please Enter a valid employee");
+		}
+	}
+	
+	public static void restartEmployeeMonthlyHours(ArrayList<Employee> employeeList, String EmployeeName) {
+		int index = returnEmployeeIndex(employeeList, EmployeeName);
+		
+		if(index != -1) {
+			employeeList.get(index).restartMonthlyHours();
+		}
+		else {
+			System.out.println("Employee does not exist.  Please Enter a valid employee");
+		}
 	}
 
 	
@@ -102,6 +145,9 @@ public class Main {
 			System.out.println("name: " + employeeList.get(i).name);
 			System.out.println("work type: " + employeeList.get(i).workType);
 			System.out.println("Hourly Rate: " + employeeList.get(i).HourlyWage);
+			System.out.println("Weekly Hours: " +  employeeList.get(i).hoursPerWeek);
+			System.out.println("Monthly Hours: " +  employeeList.get(i).MonthlyHours);
+			System.out.println("");
 		}
 	}
 	

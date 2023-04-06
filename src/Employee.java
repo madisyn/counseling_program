@@ -5,6 +5,7 @@ public class Employee {
 	String workType;
 	int MonthlySalary;
 	int hoursPerWeek;
+	int MonthlyHours;
 	int Salary =-1;
 	int HourlyWage=-1;
 	boolean paid[] = new boolean[11];
@@ -16,6 +17,7 @@ public class Employee {
 		this.MonthlySalary = HourlyRate*40;
 		this.workType = "Hourly";
 		this.hoursPerWeek = 0;
+		this.MonthlyHours = 0;
 		for(int i=0; i<paid.length; i++) {
 			paid[i] = false;
 		}
@@ -73,6 +75,15 @@ public class Employee {
 		if(this.hoursPerWeek>35 && this.hoursPerWeek<40) {
 			System.out.println("Hours close to 40.  Target hours per week is 40");
 		}
+	}
+	
+	public void restartHours() {
+		this.MonthlyHours+= this.hoursPerWeek;
+		this.hoursPerWeek = 0;
+	}
+	
+	public void restartMonthlyHours() {
+		this.MonthlyHours = 0;
 	}
 	
 	public void changeHourlyRate(int hourlyRate) {

@@ -265,8 +265,8 @@ public class Main {
 		}
 	}	
 	
-	public static void changeInternFee() {
-		
+	public static void changeInternFee(Intern intern, int feeChange) {
+		intern.changePaymentAmount(feeChange);
 	}
 	
 	
@@ -286,8 +286,13 @@ public class Main {
 		}
 	}
 	
-	public static void checkInternList() {
-		
+	public static int returnInternIndex(ArrayList<Intern> internList, String name) {
+		for(int i=0; i<internList.size(); i++) {
+			if(internList.get(i).name.equals(name)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 

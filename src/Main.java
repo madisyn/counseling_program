@@ -3,8 +3,6 @@ import java.util.Scanner;
 
 
 public class Main {
-	static Scanner scan = new Scanner(System.in);
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 				ArrayList<Employee> employeeList = new ArrayList<Employee>();
@@ -22,8 +20,14 @@ public class Main {
 				deleteEmployee(employeeList, "Sandra");
 				
 				printEmployeeList(employeeList);
-				*/
-			
+				
+				changeEmployeeHourlyRate(employeeList, "Chris", 70);
+				
+				System.out.println("******");
+				
+				printEmployeeList(employeeList);
+				
+			*/
 		
 	}
 
@@ -39,12 +43,13 @@ public class Main {
 	 * Deleting and employee removes them from the employeeList Array
 	 */
 	public static void deleteEmployee(ArrayList<Employee> employeeList, String EmployeeName) {
-		for(int i=0; i<employeeList.size(); i++) {
-			if(employeeList.get(i).name.equals(EmployeeName)){
-				employeeList.remove(i);
-				break;
-			}
-
+		
+		int index = returnEmployeeIndex(employeeList, EmployeeName);
+		if(index != -1) {
+			employeeList.remove(index);
+		}
+		else {
+			System.out.println("Employee does not exist.  Please Enter a valid employee");
 		}
 	}
 	
@@ -69,7 +74,16 @@ public class Main {
 		
 	}
 	
-	public static void changeEmployeeHourlyRate() {
+	public static void changeEmployeeHourlyRate(ArrayList<Employee> employeeList, String EmployeeName, int newRate) {
+		
+		int index = returnEmployeeIndex(employeeList, EmployeeName);
+		
+		if(index != -1) {
+			employeeList.get(index).changeHourlyRate(newRate);
+		}
+		else {
+			System.out.println("Employee does not exist.  Please Enter a valid employee");
+		}
 		
 	}
 	
@@ -93,6 +107,15 @@ public class Main {
 	
 	public static void checkEmployeeList() {
 		
+	}
+	
+	public static int returnEmployeeIndex(ArrayList<Employee> employeeList, String EmployeeName) {
+		for(int i=0; i<employeeList.size(); i++) {
+			if(employeeList.get(i).name.equals(EmployeeName)){
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	//STAFF FUNCTIONS

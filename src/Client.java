@@ -50,4 +50,20 @@ public class Client {
 		}
 		return false;
 	}
+	
+	public void changeCounselor(Staff staff) {
+		this.CounselorName = staff.name;
+		this.isIntern = false;
+		
+	}
+	
+	public void changeCounselor(Intern in) {
+		this.CounselorName = in.name;
+		this.isIntern = true;
+		
+	}
+	
+	public void changePaymentFee(int num) {
+		this.paymentAmount = num;
+	}
 }

@@ -140,20 +140,23 @@ public class Main {
 		staffList.add(newStaff);
 	}
 	
-	public static void deleteStaff() {
-		
+	/*
+	 * When we delete a staff, we need to delete that the staff is in charge of any interns and that they are assigned to clients
+	 */
+	public static void deleteStaff(Staff staff, Client client, Intern intern) {
+		//*****************************
 	}
 	
-	public static void deleteStaffClient() {
-		
+	public static void deleteStaffClient(Staff staff, Client client) {
+		staff.deleteClient(client);
 	}
 	
-	public static void addStaffClient() {
-		
+	public static void addStaffClient(Staff staff, Client client) {
+		staff.addClient(client);
 	}
 	
-	public static void changeStaffSalary(ArrayList<Staff> staffList, ) {
-		
+	public static void changeStaffSalary(Staff staff, int salaryChange) {
+		staff.changeSalary(salaryChange);
 	}
 	
 
@@ -198,7 +201,7 @@ public class Main {
 		Intern newIntern;
 		
 		//verify if StaffName is an actual staff member
-		if(!checkStaffList(staffList, StaffName)) {
+		if(returnStaffIndex(staffList, StaffName) == -1) {
 			System.out.println("Staff is not in directory.  Enter staff member");
 		}		
 		
@@ -212,7 +215,7 @@ public class Main {
 		Intern newIntern;
 		
 		//verify if StaffName is an actual staff member
-		if(!checkStaffList(staffList, StaffName)) {
+		if(returnStaffIndex(staffList, StaffName)== -1) {
 			System.out.println("Staff is not in directory.  Enter staff member");
 		}		
 		

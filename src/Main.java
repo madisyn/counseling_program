@@ -330,12 +330,16 @@ public class Main {
 	}
 	
 	public static void deleteClient() {
-		
+		//need to delete client from employee or interns as well as the arraylist
 		
 	}
 	
-	public static void ClientChangeTherapist() {
-		
+	public static void ClientChangeCounselor(Client client, Intern in) {
+		client.changeCounselor(in);
+	}
+	
+	public static void ClientChangeCounselor(Client client, Staff staff) {
+		client.changeCounselor(staff);
 	}
 	
 	
@@ -359,12 +363,16 @@ public class Main {
 		}
 	}
 	
-	public static void clientChangeFee() {
-		
+	public static void clientChangeFee(Client client, int chengeFeeAmount) {
+		client.changePaymentFee(chengeFeeAmount);
 	}
 	
-	public static void printClientList() {
-		
+	public static void printClientList(ArrayList <Client> clientList) {
+		for(int i=0; i<clientList.size(); i++) {
+			System.out.println("Name: " + clientList.get(i).name);
+			System.out.println("Fee Amount: " + clientList.get(i).paymentAmount);
+			System.out.println("Counselor Name: " + clientList.get(i).CounselorName);
+		}
 	}
 	
 	public static int returnClientIndex(ArrayList<Client> clientList, String name) {
@@ -378,8 +386,8 @@ public class Main {
 	
 	//BANK FUNCTIONS
 	
-	public static void getBankTotal() {
-		
+	public static int getBankTotal(Bank bank) {
+		return bank.returnBankBalance();
 	}
 
 

@@ -225,21 +225,24 @@ public class Main {
 		
 	}
 	
+	/*
+	 * Delete intern from Staff and Clients that they are assigned to
+	 */
 	public static void deleteIntern() {
 		
 	}
 	
 	
-	public static void AddInternClient() {
-		
+	public static void AddInternClient(Intern intern, Client client) {
+		intern.addClient(client);
 	}
 	
-	public static void deleteInternClient() {
-		
+	public static void deleteInternClient(Intern intern, Client client) {
+		intern.deleteClient(client);
 	}
 	
-	public static void InternChangeSupervisor() {
-		
+	public static void InternChangeSupervisor(Intern intern, Staff staff) {
+		intern.changeSupervisor(staff);
 	}
 	
 	public static void receiveFromIntern(Intern name, Bank bank, int month){

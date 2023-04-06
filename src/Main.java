@@ -15,37 +15,7 @@ public class Main {
 				addEmployee(employeeList, "Chris", 50);
 				addEmployee(employeeList, "Sandra", 50);
 				
-				printEmployeeList(employeeList);
-				
-				deleteEmployee(employeeList, "Sandra");
-				
-				printEmployeeList(employeeList);
-				
-				changeEmployeeHourlyRate(employeeList, "Chris", 70);
-				
-				System.out.println("******");
-				
-				printEmployeeList(employeeList);
-				
-				recordEmployeeHours(employeeList, "Chris", 8);
-				printEmployeeList(employeeList);
-				recordEmployeeHours(employeeList, "Chris", 8);
-				recordEmployeeHours(employeeList, "Chris", 8);
-				recordEmployeeHours(employeeList, "Chris", 8);
-				printEmployeeList(employeeList);
-				
-				restartEmployeeWeeklyHours(employeeList, "Chris");
-				
-				printEmployeeList(employeeList);
-				
-				recordEmployeeHours(employeeList, "Chris", 8);
-				printEmployeeList(employeeList);
-				
-				
-				
-				
-				
-			
+
 		
 	}
 
@@ -151,10 +121,9 @@ public class Main {
 		}
 	}
 	
-	public static void checkEmployeeList() {
-		
-	}
-	
+	/*
+	 * checks if employee is in the arrayList as well as returns its index-=
+	 */
 	public static int returnEmployeeIndex(ArrayList<Employee> employeeList, String EmployeeName) {
 		for(int i=0; i<employeeList.size(); i++) {
 			if(employeeList.get(i).name.equals(EmployeeName)){
@@ -183,7 +152,7 @@ public class Main {
 		
 	}
 	
-	public static void changeStaffSalary() {
+	public static void changeStaffSalary(ArrayList<Staff> staffList, ) {
 		
 	}
 	
@@ -205,22 +174,22 @@ public class Main {
 	}
 	
 	public static Staff returnStaffMember(ArrayList<Staff> staffList, String name) {
-		for(int i=0; i<staffList.size(); i++) {
-			if(staffList.get(i).name.equals(name)) {
-				return staffList.get(i);
-			}
+		int index = returnStaffIndex(staffList, name);
+		
+		if(index != -1) {
+			return staffList.get(index);
 		}
 		return null;
 	}	
 	
 	
-	public static boolean checkStaffList(ArrayList<Staff> staffList, String name) {
+	public static int returnStaffIndex(ArrayList<Staff> staffList, String name) {
 		for(int i=0; i<staffList.size(); i++) {
 			if(staffList.get(i).name.equals(name)) {
-				return true;
+				return i;
 			}
 		}
-		return false;
+		return -1;
 	}
 	
 	//INTERN FUNCTIONS

@@ -301,10 +301,33 @@ public class Main {
 	
 	//CLIENT FUNCTIONS
 	
-	public static void addClient() {
+	public static void addClient(ArrayList<Client> clientList, String name, Staff staff, int expense) {
+		Client newClient;
+		
+		//verify if ClientName is an actual staff member
+		if(returnClientIndex(clientList, name)== -1) {
+			System.out.println("Staff is not in directory.  Enter staff member");
+		}		
+		
+		newClient = new Client(name, expense, staff);
+
+		clientList.add(newClient);
 		
 	}
 	
+	public static void addClient(ArrayList<Client> clientList, String name, Intern intern, int expense) {
+		Client newClient;
+		
+		//verify if ClientName is an actual staff member
+		if(returnClientIndex(clientList, name)== -1) {
+			System.out.println("Staff is not in directory.  Enter staff member");
+		}		
+		
+		newClient = new Client(name, expense, intern);
+
+		clientList.add(newClient);
+		
+	}
 	
 	public static void deleteClient() {
 		
@@ -344,9 +367,14 @@ public class Main {
 		
 	}
 	
-	public static void checkStaffList() {
-		
-	} 
+	public static int returnClientIndex(ArrayList<Client> clientList, String name) {
+		for(int i=0; i<clientList.size(); i++) {
+			if(clientList.get(i).name.equals(name)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 	
 	//BANK FUNCTIONS
 	

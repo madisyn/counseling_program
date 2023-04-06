@@ -39,25 +39,29 @@ public class Staff extends Employee{
 	}
 	
 	
-	public void addClient(Client name) {
-		if(clientList.contains(name)) {
+	public void addClient(Client client) {
+		if(clientList.contains(client)) {
 			System.out.println("Client is already assigned to " + this.name);
 		}
 		else {
-			clientList.add(name);	
+			clientList.add(client);	
 		}
 	
 	}
 
-	public void deleteClient(Client name) {
-		if(clientList.contains(name)) {
-			clientList.remove(name);
+	public void deleteClient(Client client) {
+		if(clientList.contains(client)) {
+			clientList.remove(client);
 		}
 		else {
 			System.out.println("Client is not assigned to " + this.name);
 		}
 
 		
+	}
+	
+	public void changeSalary(int newSalary) {
+		this.Salary = newSalary;
 	}
 	
 }

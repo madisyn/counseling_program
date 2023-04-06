@@ -67,7 +67,9 @@ public class Intern {
 		else {
 			System.out.println("Client is not assigned to " + this.name);
 		}
-
-		
+	}
+	
+	public void changePaymentAmount(int num) {
+		this.paymentAmount= num;
 	}
 }

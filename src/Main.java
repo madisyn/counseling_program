@@ -13,6 +13,16 @@ public class Main {
 				ArrayList<Client> clientList = new ArrayList<Client>();
 				Bank bank1 = new Bank("Name", 250000);
 				
+				/*addEmployee(employeeList, "Justin", 50);
+				addEmployee(employeeList, "Chris", 50);
+				addEmployee(employeeList, "Sandra", 50);
+				
+				printEmployeeList(employeeList);
+				
+				deleteEmployee(employeeList, "Sandra");
+				
+				printEmployeeList(employeeList);
+				*/
 			
 		
 	}
@@ -25,8 +35,17 @@ public class Main {
 		employeeList.add(newEmployee);
 	}
 	
-	public static void deleteEmployee() {
-		
+	/*
+	 * Deleting and employee removes them from the employeeList Array
+	 */
+	public static void deleteEmployee(ArrayList<Employee> employeeList, String EmployeeName) {
+		for(int i=0; i<employeeList.size(); i++) {
+			if(employeeList.get(i).name.equals(EmployeeName)){
+				employeeList.remove(i);
+				break;
+			}
+
+		}
 	}
 	
 	
@@ -278,7 +297,7 @@ public class Main {
 	
 	public static void checkStaffList() {
 		
-	}
+	} 
 	
 	//BANK FUNCTIONS
 	

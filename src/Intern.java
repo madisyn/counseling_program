@@ -72,4 +72,8 @@ public class Intern {
 	public void changePaymentAmount(int num) {
 		this.paymentAmount= num;
 	}
+	
+	public void deleteSupervisor() {
+		this.supervisor = null;
+	}
 }

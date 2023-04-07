@@ -236,9 +236,10 @@ public class Main {
 	/*
 	 * Delete intern from Staff and Clients that they are assigned to
 	 */
-	public static void deleteIntern(Staff staff, Client client) {
+	public static void deleteIntern(Staff staff, Intern intern) {
 		
-		deleteStaffClient(staff, client)
+		deleteStaffIntern(staff, intern);
+		
 	}
 	
 	
@@ -368,6 +369,10 @@ public class Main {
 		
 		
 		
+	}
+	
+	public static void ClientDeleteCounselor(Client client) {
+		client.deleteCounselor();
 	}
 	
 	public static void ClientChangeCounselor(Client client, Intern in) {

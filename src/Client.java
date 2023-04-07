@@ -74,4 +74,9 @@ public class Client {
 	public boolean getCounselorType() {
 		return this.isIntern;
 	}
+	
+	public void deleteCounselor() {
+		this.CounselorName = "";
+		this.isIntern = false;
+	}
 }

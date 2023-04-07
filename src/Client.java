@@ -76,7 +76,7 @@ public class Client {
 	}
 	
 	public void deleteCounselor() {
-		this.CounselorName = "";
+		this.CounselorName = null;
 		this.isIntern = false;
 	}
 }

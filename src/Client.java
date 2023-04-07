@@ -66,4 +66,12 @@ public class Client {
 	public void changePaymentFee(int num) {
 		this.paymentAmount = num;
 	}
+	
+	public String getClientsCounselor() {
+		return this.CounselorName;
+	}
+	
+	public boolean getCounselorType() {
+		return this.isIntern;
+	}
 }

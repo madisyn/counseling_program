@@ -329,8 +329,35 @@ public class Main {
 		
 	}
 	
-	public static void deleteClient() {
+	public static void deleteClient(Client client, ArrayList<Client> clientList, ArrayList<Intern> internList, ArrayList<Staff> staffList) {
 		//need to delete client from employee or interns as well as the arraylist
+		String counselorName = client.getClientsCounselor();
+		int index;
+		//if the counselor is an intern
+		if(client.getCounselorType()) {
+			//find the intern and call delete interns client
+			index = returnInternIndex(internList, counselorName);
+			
+			if(index == -1) {
+				System.out.println("Counselor not in List.  Please enter a valid counselor");
+				return;
+			}
+			internList.get(index).deleteClient(client);
+		}
+		else {
+			//find the staff and call delete staffs client
+			index = returnStaffIndex(staffList, counselorName);
+			if(index == -1) {
+				System.out.println("Counselor not in List.  Please enter a valid counselor");
+				return;
+			}
+			staffList.get(index).deleteClient(client);
+		}
+				
+		clientList.remove(returnClientIndex(clientList, client.name));
+		
+		
+		
 		
 	}
 	

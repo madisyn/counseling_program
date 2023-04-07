@@ -144,7 +144,23 @@ public class Main {
 	 * When we delete a staff, we need to delete that the staff is in charge of any interns and that they are assigned to clients
 	 */
 	public static void deleteStaff(Staff staff, Client client, Intern intern) {
-		//*****************************
+		
+		//delete the staff that are assigned to any interns
+		ArrayList<Intern> internList = new ArrayList<>();
+		internList = staff.getInternList();
+		
+		for(int i =0; i <internList.size(); i++) {
+			internList.get(i).deleteSupervisor();
+		}
+		
+		
+		//deletes the staff from every client the staff has
+		ArrayList<Client> clientList = new ArrayList<>();
+		clientList = intern.getClientList();
+		
+		for(int i=0; i<clientList.size(); i++) {
+			ClientDeleteCounselor(clientList.get(i));
+		}
 	}
 	
 	public static void deleteStaffClient(Staff staff, Client client) {
@@ -238,7 +254,19 @@ public class Main {
 	 */
 	public static void deleteIntern(Staff staff, Intern intern) {
 		
+		//deletes the intern from the staffs Intern List
 		deleteStaffIntern(staff, intern);
+		
+		//deletes the intern from every client the intern has
+		ArrayList<Client> clientList = new ArrayList<>();
+		clientList = intern.getClientList();
+		
+		for(int i=0; i<clientList.size(); i++) {
+			ClientDeleteCounselor(clientList.get(i));
+		}
+		
+		
+
 		
 	}
 	

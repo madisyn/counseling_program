@@ -155,6 +155,14 @@ public class Main {
 		staff.addClient(client);
 	}
 	
+	public static void addStaffIntern(Staff staff, Intern intern) {
+		staff.addIntern(intern);
+	}
+	
+	public static void deleteStaffIntern(Staff staff, Intern intern) {
+		staff.deleteIntern(intern);
+	}
+	
 	public static void changeStaffSalary(Staff staff, int salaryChange) {
 		staff.changeSalary(salaryChange);
 	}
@@ -228,8 +236,9 @@ public class Main {
 	/*
 	 * Delete intern from Staff and Clients that they are assigned to
 	 */
-	public static void deleteIntern() {
+	public static void deleteIntern(Staff staff, Client client) {
 		
+		deleteStaffClient(staff, client)
 	}
 	
 	

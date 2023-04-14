@@ -10,26 +10,18 @@ public class Main {
 				ArrayList<Intern> internList = new ArrayList<Intern>();
 				ArrayList<Client> clientList = new ArrayList<Client>();
 				Bank bank1 = new Bank("Name", 250000);
-				
-				addEmployee(employeeList, "Justin", 50);
-				addEmployee(employeeList, "Chris", 50);
-				addEmployee(employeeList, "Sandra", 50);
-				
 
-		
 	}
 
 		
 	//EMPLOYEE FUNCTIONS
 	
-	public static void addEmployee(ArrayList<Employee> employeeList, String name, int rate) {
-		Employee newEmployee = new Employee(name, rate);
+	public static void addEmployee(ArrayList<Employee> employeeList, String name, int hourlyRate) {
+		Employee newEmployee = new Employee(name, hourlyRate);
 		employeeList.add(newEmployee);
 	}
 	
-	/*
-	 * Deleting and employee removes them from the employeeList Array
-	 */
+
 	public static void deleteEmployee(ArrayList<Employee> employeeList, String EmployeeName) {
 		
 		int index = returnEmployeeIndex(employeeList, EmployeeName);
@@ -48,12 +40,12 @@ public class Main {
 	 */
 	public static void payEmployee(Employee name, Bank bank, int Month) {
 		
-		if(bank.BankPaymentCheck(name.MonthlySalary) && (name.checkPaymentMonth(Month))){
+		if(bank.BankVerifySufficientFunds(name.MonthlySalary) && (name.checkCompletedPaymentMonth(Month))){
 			bank.payEmployees(name, Month);
 			System.out.println(name.name + " was paid $" + name.MonthlySalary);
 			System.out.println(name.paid[Month]);
 		}
-		else if(!bank.BankPaymentCheck(name.MonthlySalary)) {
+		else if(!bank.BankVerifySufficientFunds(name.MonthlySalary)) {
 			System.out.println("Bank does not have enough funds.  Please talk to manager");
 		}
 		else if(name.paid[Month] == true) {
@@ -143,24 +135,34 @@ public class Main {
 	/*
 	 * When we delete a staff, we need to delete that the staff is in charge of any interns and that they are assigned to clients
 	 */
-	public static void deleteStaff(Staff staff, Client client, Intern intern) {
+	public static void deleteStaff(ArrayList<Staff> staffList, Staff staff, Intern intern) {
 		
-		//delete the staff that are assigned to any interns
-		ArrayList<Intern> internList = new ArrayList<>();
-		internList = staff.getInternList();
+		int index = returnStaffIndex(staffList, staff.name);
 		
-		for(int i =0; i <internList.size(); i++) {
-			internList.get(i).deleteSupervisor();
+		if(index != -1) {
+			//delete the staff that are assigned to any interns
+			ArrayList<Intern> internList = new ArrayList<>();
+			internList = staff.getInternList();
+			
+			for(int i =0; i <internList.size(); i++) {
+				internList.get(i).deleteSupervisor();
+			}
+			
+			
+			//deletes the staff from every client the staff has
+			ArrayList<Client> clientList = new ArrayList<>();
+			clientList = staff.getClientList();
+			
+			for(int i=0; i<clientList.size(); i++) {
+				DeleteClientsCounselor(clientList.get(i));
+			}
+			
+			staffList.remove(index);
+		}
+		else {
+			System.out.println("Staff does not exist");
 		}
 		
-		
-		//deletes the staff from every client the staff has
-		ArrayList<Client> clientList = new ArrayList<>();
-		clientList = intern.getClientList();
-		
-		for(int i=0; i<clientList.size(); i++) {
-			ClientDeleteCounselor(clientList.get(i));
-		}
 	}
 	
 	public static void deleteStaffClient(Staff staff, Client client) {
@@ -175,7 +177,7 @@ public class Main {
 		staff.addIntern(intern);
 	}
 	
-	public static void deleteStaffIntern(Staff staff, Intern intern) {
+	public static void deleteStaffsIntern(Staff staff, Intern intern) {
 		staff.deleteIntern(intern);
 	}
 	
@@ -222,28 +224,26 @@ public class Main {
 	//INTERN FUNCTIONS
 	
 	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList, String internName, String StaffName) {
-		Intern newIntern;
 		
 		//verify if StaffName is an actual staff member
 		if(returnStaffIndex(staffList, StaffName) == -1) {
-			System.out.println("Staff is not in directory.  Enter staff member");
+			System.out.println("Intern is not in directory.  Enter Intern name");
 		}		
 		
-		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
+		Intern newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
 
 		internList.add(newIntern);
 		
 	}
 	
 	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList, String internName, String StaffName, int modification) {
-		Intern newIntern;
 		
 		//verify if StaffName is an actual staff member
 		if(returnStaffIndex(staffList, StaffName)== -1) {
 			System.out.println("Staff is not in directory.  Enter staff member");
 		}		
 		
-		newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
+		Intern newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
 
 		internList.add(newIntern);
 		
@@ -255,19 +255,16 @@ public class Main {
 	public static void deleteIntern(Staff staff, Intern intern) {
 		
 		//deletes the intern from the staffs Intern List
-		deleteStaffIntern(staff, intern);
+		deleteStaffsIntern(staff, intern);
 		
 		//deletes the intern from every client the intern has
 		ArrayList<Client> clientList = new ArrayList<>();
 		clientList = intern.getClientList();
 		
 		for(int i=0; i<clientList.size(); i++) {
-			ClientDeleteCounselor(clientList.get(i));
+			DeleteClientsCounselor(clientList.get(i));
 		}
-		
-		
 
-		
 	}
 	
 	
@@ -283,8 +280,8 @@ public class Main {
 		intern.changeSupervisor(staff);
 	}
 	
-	public static void receiveFromIntern(Intern name, Bank bank, int month){
-		if(!name.checkPaymentMonth(month)) {
+	public static void receivePaymenFromIntern(Intern name, Bank bank, int month){
+		if(!name.checkCompletedPaymentMonth(month)) {
 			bank.receivePayment(name, month);
 			System.out.println("Intern " + name.name + " payment received");
 		}
@@ -293,8 +290,8 @@ public class Main {
 		}
 	}
 	
-	public static void voidIntern(Intern name, Bank bank, int month) {
-		if(name.checkPaymentMonth(month) == true) {
+	public static void voidInternMonthlyPayment(Intern name, Bank bank, int month) {
+		if(name.checkCompletedPaymentMonth(month) == true) {
 			name.voidMonthlyExpense(month);
 			System.out.println("Payment for client " + name.name + " on month: " + month + " voided.");
 		}
@@ -334,9 +331,6 @@ public class Main {
 	}
 	
 
-	
-	
-	
 	//CLIENT FUNCTIONS
 	
 	public static void addClient(ArrayList<Client> clientList, String name, Staff staff, int expense) {
@@ -399,7 +393,7 @@ public class Main {
 		
 	}
 	
-	public static void ClientDeleteCounselor(Client client) {
+	public static void DeleteClientsCounselor(Client client) {
 		client.deleteCounselor();
 	}
 	
@@ -412,8 +406,8 @@ public class Main {
 	}
 	
 	
-	public static void receiveFromClient(Client name, Bank bank, int month, int week){
-		if(!name.checkPaymentMonthWeek(month, week)) {
+	public static void receivePaymentFromClient(Client name, Bank bank, int month, int week){
+		if(!name.checkCompletedPaymentWeek(month, week)) {
 			bank.receivePayment(name, month, week);
 			System.out.println("Client " + name.name + " payment received");
 		}
@@ -422,8 +416,8 @@ public class Main {
 		}
 	}
 	
-	public static void voidClient(Client name, Bank bank, int month, int week) {
-		if(name.checkPaymentMonthWeek(month, week) == true) {
+	public static void voidClientPayment(Client name, Bank bank, int month, int week) {
+		if(name.checkCompletedPaymentWeek(month, week) == true) {
 			name.voidExpense(month, week);
 			System.out.println("Payment for client " + name.name + " on month: " + month + " week: " + week + " voided.");
 		}

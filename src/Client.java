@@ -43,8 +43,7 @@ public class Client {
 	public void voidExpense(int month, int week) {
 		paid[month][week] = false;
 	}
-	
-	public boolean checkPaymentMonthWeek(int month, int week) {
+	public boolean checkCompletedPaymentWeek(int month, int week) {
 		if(this.paid[month][week]==true) {
 			return true;
 		}

@@ -90,7 +90,7 @@ public class Employee {
 		this.HourlyWage = hourlyRate;
 	}
 	
-	public boolean checkPaymentMonth(int month) {
+	public boolean checkCompletedPaymentMonth(int month) {
 		if(this.paid[month]==true  && month>0 && month <=12) {
 			return true;
 		}

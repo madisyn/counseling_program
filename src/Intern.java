@@ -43,7 +43,7 @@ public class Intern {
 		this.supervisor = name;
 	}
 	
-	public boolean checkPaymentMonth(int month) {
+	public boolean checkCompletedPaymentMonth(int month) {
 		if(this.paid[month]==true) {
 			return true;
 		}

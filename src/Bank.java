@@ -56,7 +56,7 @@ public class Bank {
 		name.voidExpense(month, week);
 	}
 	
-	public boolean BankPaymentCheck(int number) {
+	public boolean BankVerifySufficientFunds(int number) {
 		if(number<this.total) {
 			return true;
 		}

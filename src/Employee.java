@@ -1,6 +1,5 @@
 
 public class Employee {
-	
 	String name;
 	String workType;
 	int MonthlySalary;
@@ -14,7 +13,7 @@ public class Employee {
 	public Employee(String name, int HourlyRate) {
 		this.name = name;
 		this.HourlyWage = HourlyRate;
-		this.MonthlySalary = HourlyRate*40;
+		this.MonthlySalary = HourlyRate*40*4;
 		this.workType = "Hourly";
 		this.hoursPerWeek = 0;
 		this.MonthlyHours = 0;
@@ -88,6 +87,7 @@ public class Employee {
 	
 	public void changeHourlyRate(int hourlyRate) {
 		this.HourlyWage = hourlyRate;
+		this.MonthlySalary = hourlyRate*40*4;
 	}
 	
 	public boolean checkCompletedPaymentMonth(int month) {

@@ -33,17 +33,29 @@ public class Main {
 				addStaff(staffList, "Christine", 150000);
 				
 				printStaffList(staffList);
+				System.out.println("*******************");
 				
-				/*
-				addClient(clientList, "Jackie", staffList, "Taylor", 150);
-				addStaffClient()
-				addClient(clientList, "Jenny", staffList, "Taylor", 150);
-				addClient(clientList, "Denice", staffList, "Taylor", 150);
-				addClient(clientList, "Eri", staffList, "Alex", 150);
-				addClient(clientList, "Franco", staffList, "Alex", 150);
-				addClient(clientList, "Paul", staffList, "Alex", 150);
+
+				addClientAssignedToStaff(clientList, "Jackie", staffList, "Taylor", 150);
+				addClientAssignedToStaff(clientList, "Jenny", staffList, "Taylor", 150);
+				addClientAssignedToStaff(clientList, "Denice", staffList, "Taylor", 150);
+				addClientAssignedToStaff(clientList, "Eri", staffList, "Alex", 150);
+				addClientAssignedToStaff(clientList, "Franco", staffList, "Alex", 150);
+				addClientAssignedToStaff(clientList, "Paul", staffList, "Alex", 150);
 				
-				*/
+				
+				deleteStaff(staffList, "Alex");
+				printStaffList(staffList);
+				
+				printClientList(clientList);
+				
+				//System.out.println("Franco counselor:");
+				//printClientCounselorName(clientList, "Franco");
+				
+				
+				
+				
+				
 				
 				
 				
@@ -185,27 +197,27 @@ public class Main {
 	public static void deleteStaff(ArrayList<Staff> staffList, String staffName) {
 		
 		int index = returnStaffIndex(staffList, staffName);
+		if(index == -1) {return;}
 		
-		if(index != -1) {
-			//delete the staff that are assigned to any interns
-			ArrayList<Intern> internList = new ArrayList<>();
-			internList = staffList.get(index).getInternList();
+		//delete the staff that are assigned to any interns
+		ArrayList<Intern> internList = new ArrayList<>();
+		internList = staffList.get(index).getInternList();
+		
+		for(int i =0; i <internList.size(); i++) {
+			internList.get(i).deleteSupervisor();
+		}
 			
-			for(int i =0; i <internList.size(); i++) {
-				internList.get(i).deleteSupervisor();
-			}
 			
-			
-			//deletes the staff from every client the staff has
-			ArrayList<Client> clientList = new ArrayList<>();
-			clientList = staffList.get(index).getClientList();
-			
-			for(int i=0; i<clientList.size(); i++) {
-				DeleteClientsCounselor(clientList, clientList.get(i).name);
-			}
+		//deletes the staff from every client the staff has
+		ArrayList<Client> clientList = new ArrayList<>();
+		clientList = staffList.get(index).getClientList();
+		
+		for(int i=0; i<clientList.size(); i++) {
+			DeleteClientsCounselor(clientList, clientList.get(i).name);
+		}
 			
 			staffList.remove(index);
-		}
+		
 		
 	}
 	
@@ -253,7 +265,7 @@ public class Main {
 		for(int i=0; i<staffList.size(); i++) {
 			System.out.println("name: " + staffList.get(i).name);
 			System.out.println("work type: " + staffList.get(i).workType);
-			System.out.println("Monthly Salary: " + staffList.get(i).Salary);
+			System.out.println("Monthly Salary: " + staffList.get(i).Salary+ "\n");
 		}
 	}
 		
@@ -332,7 +344,7 @@ public class Main {
 	}
 	
 	
-	public static void AddInternClient(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
+	public static void addInternClient(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
 		int internIndex = returnInternIndex(internList, internName);
 		if(internIndex == -1) {return;}	
 		int clientIndex = returnClientIndex(clientList, clientName);
@@ -421,14 +433,12 @@ public class Main {
 	//CLIENT FUNCTIONS
 	
 	public static void addClientAssignedToStaff(ArrayList<Client> clientList, String clientName, ArrayList<Staff> staffList, String staffName, int expense) {
-		
-		int clientIndex = returnClientIndex(clientList, clientName);
-		if(clientIndex == -1) {return;}	
 		int staffIndex = returnStaffIndex(staffList, staffName);
 		if(staffIndex == -1) {return;}	
 
 		Client newClient = new Client(clientName, expense, staffList.get(staffIndex));
 		clientList.add(newClient);
+		addStaffClient(staffList, staffName, clientList, clientName);
 			
 	}
 	
@@ -442,6 +452,7 @@ public class Main {
 		Client newClient = new Client(clientList.get(clientIndex).name, expense, internList.get(internIndex));
 
 		clientList.add(newClient);
+		addInternClient(internList, internName, clientList, clientName);
 		
 	}
 	
@@ -484,7 +495,6 @@ public class Main {
 	public static void DeleteClientsCounselor(ArrayList<Client> clientList, String clientName) {
 		int clientIndex = returnClientIndex(clientList, clientName);
 		if(clientIndex == -1) {return;}	
-
 		clientList.get(clientIndex).deleteCounselor();
 	}
 	
@@ -558,6 +568,13 @@ public class Main {
 		}
 		System.out.println("Client does not exist.  Please enter a valid Client name");
 		return -1;
+	}
+	
+	public static void printClientCounselorName(ArrayList<Client> clientList, String clientName) {
+		int clientIndex = returnClientIndex(clientList, clientName);
+		if(clientIndex == -1) {return;}	
+		
+		System.out.println("Client " + clientList.get(clientIndex).name + "counselor:  " + clientList.get(clientIndex).CounselorName);
 	}
 	
 	//BANK FUNCTIONS

@@ -62,6 +62,7 @@ public class Staff extends Employee{
 	
 	public void changeSalary(int newSalary) {
 		this.Salary = newSalary;
+		this.MonthlySalary = newSalary/12;
 	}
 	
 }

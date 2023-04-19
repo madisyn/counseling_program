@@ -2,21 +2,22 @@
  * Client will have an Intern assigned to them and handle payments.
  */
 public class Client {
-
+	private final int M = 12;
+	private final int N = 4;
 	String name;
 	int paymentAmount =150;
-	boolean paid[][] = new boolean[12][4];
+	boolean paid[][] = new boolean[M][N];
 	String CounselorName;
 	boolean isIntern = true;
-	
+		
 
 	public Client(String name, int Expense, Intern in) {
 		this.name = name;
 		this.paymentAmount = Expense;
 		this.CounselorName = in.name;
 		
-		for(int i=0; i<12; i++) {
-			for(int j=0; i<4; j++) {
+		for(int i=0; i<M; i++) {
+			for(int j=0; j<N; j++) {
 				this.paid[i][j] = false;
 			}
 		}
@@ -28,8 +29,8 @@ public class Client {
 		this.CounselorName = staff.name;
 		this.isIntern = false;
 		
-		for(int i=0; i<12; i++) {
-			for(int j=0; j<4; j++) {
+		for(int i=0; i<M; i++) {
+			for(int j=0; j<N; j++) {
 				this.paid[i][j] = false;
 			}
 		}

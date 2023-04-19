@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,52 +11,6 @@ public class Main {
 				ArrayList<Intern> internList = new ArrayList<Intern>();
 				ArrayList<Client> clientList = new ArrayList<Client>();
 				Bank bank1 = new Bank("Name", 250000);
-				
-				addEmployee(employeeList, "Maddie", 50);
-				addEmployee(employeeList, "Ani", 45);
-				addEmployee(employeeList, "Sandra", 45);
-				addEmployee(employeeList, "Selam", 50);
-				
-				//Employee check
-				deleteEmployee(employeeList, "Selam");
-				payEmployee(employeeList, "Selam", bank1, 1);
-				recordEmployeeHours(employeeList, "Sandra", 10);
-				payEmployee(employeeList, "Sandra", bank1, 1);
-				payEmployee(employeeList, "Sandra", bank1, 1);
-				changeEmployeeHourlyRate(employeeList, "Sandra", 70);
-				payEmployee(employeeList, "Sandra", bank1, 2);
-				printBankTotal(bank1);
-				payEmployee(employeeList, "Christie", bank1, 2);
-				
-				addStaff(staffList, "Laurie", 200000);
-				addStaff(staffList, "Taylor", 70000);
-				addStaff(staffList, "Alex", 65000);
-				addStaff(staffList, "Christine", 150000);
-				
-				printStaffList(staffList);
-				System.out.println("*******************");
-				
-
-				addClientAssignedToStaff(clientList, "Jackie", staffList, "Taylor", 150);
-				addClientAssignedToStaff(clientList, "Jenny", staffList, "Taylor", 150);
-				addClientAssignedToStaff(clientList, "Denice", staffList, "Taylor", 150);
-				addClientAssignedToStaff(clientList, "Eri", staffList, "Alex", 150);
-				addClientAssignedToStaff(clientList, "Franco", staffList, "Alex", 150);
-				addClientAssignedToStaff(clientList, "Paul", staffList, "Alex", 150);
-				
-				
-				deleteStaff(staffList, "Alex");
-				printStaffList(staffList);
-				
-				printClientList(clientList);
-				
-				//System.out.println("Franco counselor:");
-				//printClientCounselorName(clientList, "Franco");
-				
-				
-				
-				
-				
 				
 				
 				
@@ -221,15 +176,16 @@ public class Main {
 		
 	}
 	
-	public static void deleteStaffClient(ArrayList<Staff> staffList, String staffName, ArrayList<Client> clientList, String clientName) {
+	public static void removeClientConnectedToStaff(ArrayList<Staff> staffList, String staffName, ArrayList<Client> clientList, String clientName) {
 		int staffIndex = returnStaffIndex(staffList, staffName);
 		if(staffIndex==-1) {return;	}
 		int clientIndex = returnClientIndex(clientList, clientName);
 		if(clientIndex==-1) {return;}
 		staffList.get(staffIndex).deleteClient(clientList.get(clientIndex));
+		DeleteClientsCounselor(clientList, clientName);
 	}
 	
-	public static void addStaffClient(ArrayList<Staff> staffList, String staffName, ArrayList<Client> clientList, String clientName) {
+	public static void addClientToStaff(ArrayList<Staff> staffList, String staffName, ArrayList<Client> clientList, String clientName) {
 		int staffIndex = returnStaffIndex(staffList, staffName);
 		if(staffIndex==-1) {return;}
 		int clientIndex = returnClientIndex(clientList, clientName);
@@ -237,7 +193,7 @@ public class Main {
 		staffList.get(staffIndex).addClient(clientList.get(clientIndex));
 	}
 	
-	public static void addStaffIntern(ArrayList<Staff> staffList, String staffName, ArrayList<Intern> internList, String internName) {
+	public static void addInternToStaff(ArrayList<Staff> staffList, String staffName, ArrayList<Intern> internList, String internName) {
 		int staffIndex = returnStaffIndex(staffList, staffName);
 		if(staffIndex==-1) {return;}
 		int internIndex = returnInternIndex(internList, internName);
@@ -251,7 +207,10 @@ public class Main {
 		if(staffIndex==-1) {return;}
 		int internIndex = returnInternIndex(internList, internName);
 		if(internIndex==-1) {return;}
+		
 		staffList.get(staffIndex).deleteIntern(internList.get(internIndex));
+		
+		InternDeleteSupervisor(internList, internName);
 	}
 	
 	public static void changeStaffSalary(ArrayList<Staff> staffList, String staffName, int salaryChange) {
@@ -261,7 +220,7 @@ public class Main {
 	}
 	
 
-		public static void printStaffList(ArrayList<Staff> staffList) {
+	public static void printStaffList(ArrayList<Staff> staffList) {
 		for(int i=0; i<staffList.size(); i++) {
 			System.out.println("name: " + staffList.get(i).name);
 			System.out.println("work type: " + staffList.get(i).workType);
@@ -271,13 +230,28 @@ public class Main {
 		
 	public static void printStaffClients(ArrayList<Staff> staffList, String staffName) {
 		int staffIndex = returnStaffIndex(staffList, staffName);
-		if(staffIndex==-1) {return;}
+		if(staffIndex==-1) {
+			System.out.println("Staff Does not exist.");
+			return;}
 		
 		ArrayList<Client> clientList = new ArrayList<>();
 		clientList = staffList.get(staffIndex).getClientList();
 		for(int i=0; i<clientList.size(); i++) {
-			System.out.println("check: " + clientList.get(i).name);
+			System.out.println(staffName + "'s client: " + clientList.get(i).name);
 		}
+	}
+	
+	public static void printStaffInterns(ArrayList<Staff> staffList, String staffName) {
+		int staffIndex = returnStaffIndex(staffList, staffName);
+		if(staffIndex==-1) {
+			System.out.println("Staff Does not exist.");
+			return;}
+		ArrayList<Intern> internList = new ArrayList<>();
+		internList = staffList.get(staffIndex).getInternList();
+		for(int i=0; i<internList.size(); i++) {
+			System.out.println(staffName + "'s intern: " + internList.get(i).name);
+		}
+		
 	}
 	
 	public static Staff returnStaffMember(ArrayList<Staff> staffList, String name) {
@@ -305,11 +279,16 @@ public class Main {
 	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList, String internName, String StaffName) {
 		
 		int staffIndex = returnStaffIndex(staffList, StaffName);
-		if(staffIndex == -1) {return;}		
+		if(staffIndex == -1) {
+			System.out.println("Staff does not exist.  Please enter valid staff");
+			return;
+			}		
 		
 		Intern newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
 
 		internList.add(newIntern);
+		
+		addInternToStaff(staffList, StaffName, internList, internName);
 		
 	}
 	
@@ -321,17 +300,15 @@ public class Main {
 		Intern newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
 
 		internList.add(newIntern);
+		addInternToStaff(staffList, StaffName, internList, internName);
 		
 	}
 	
 	/*
 	 * Delete intern from Staff and Clients that they are assigned to
 	 */
-	public static void deleteIntern(ArrayList<Staff> staffList, String staffName, ArrayList<Intern> internList, String internName) {
-		
-		//deletes the intern from the staffs Intern List
-		deleteStaffsIntern(staffList, staffName, internList, internName);
-		
+	public static void deleteIntern(ArrayList<Staff> staffList, ArrayList<Intern> internList, String internName) {
+				
 		//deletes the intern from every client the intern has
 		int internIndex = returnInternIndex(internList, internName);
 		ArrayList<Client> clientList = new ArrayList<>();
@@ -340,23 +317,29 @@ public class Main {
 		for(int i=0; i<clientList.size(); i++) {
 			DeleteClientsCounselor(clientList, clientList.get(i).name);
 		}
+		//deletes the intern from the staffs Intern List
+		deleteStaffsIntern(staffList, internList.get(internIndex).returnSupervisor().name, internList, internName);
+		
+		internList.remove(internIndex);
 
 	}
 	
 	
-	public static void addInternClient(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
+	public static void addClientToIntern(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
 		int internIndex = returnInternIndex(internList, internName);
-		if(internIndex == -1) {return;}	
 		int clientIndex = returnClientIndex(clientList, clientName);
-		if(clientIndex == -1) {return;}	
 		internList.get(internIndex).addClient(clientList.get(clientIndex));
 	}
 	
-	public static void deleteInternClient(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
+	public static void removeInternsClient(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
 		int internIndex = returnInternIndex(internList, internName);
-		if(internIndex == -1) {return;}	
+		if(internIndex == -1) {
+			System.out.println("Intern does not exist");
+			return;}	
 		int clientIndex = returnClientIndex(clientList, clientName);
-		if(clientIndex == -1) {return;}	
+		if(clientIndex == -1) {
+			System.out.println("Client does not exist");
+			return;}	
 		internList.get(internIndex).deleteClient(clientList.get(clientIndex));
 	}
 	
@@ -366,6 +349,13 @@ public class Main {
 		int staffIndex = returnStaffIndex(staffList, staffName);
 		if(staffIndex == -1) {return;}	
 		internList.get(internIndex).changeSupervisor(staffList.get(staffIndex));
+	}
+	
+	public static void InternDeleteSupervisor(ArrayList<Intern> internList, String internName) {
+		int internIndex = returnInternIndex(internList, internName);
+		if(internIndex == -1) {return;}	
+		
+		internList.get(internIndex).deleteSupervisor();
 	}
 	
 	public static void receivePaymenFromIntern(ArrayList<Intern> internList, String internName, Bank bank, int month){
@@ -414,8 +404,9 @@ public class Main {
 		if(internIndex == -1) {return;}	
 		ArrayList<Client> clientList = new ArrayList<>();
 		clientList = internList.get(internIndex).getClientList();
+		System.out.println(internName + "'s Clients:");
 		for(int i=0; i<clientList.size(); i++) {
-			System.out.println("check: " + clientList.get(i).name);
+			System.out.println(clientList.get(i).name);
 		}
 	}
 	
@@ -433,26 +424,35 @@ public class Main {
 	//CLIENT FUNCTIONS
 	
 	public static void addClientAssignedToStaff(ArrayList<Client> clientList, String clientName, ArrayList<Staff> staffList, String staffName, int expense) {
+		
+		int clientIndex = returnClientIndex(clientList, clientName);
+		if(clientIndex != -1) {
+			System.out.println("Client already exists");
+			return;}	
 		int staffIndex = returnStaffIndex(staffList, staffName);
-		if(staffIndex == -1) {return;}	
+		if(staffIndex == -1) {
+			System.out.println("Staff does not exist");
+			return;}	
 
 		Client newClient = new Client(clientName, expense, staffList.get(staffIndex));
 		clientList.add(newClient);
-		addStaffClient(staffList, staffName, clientList, clientName);
+		addClientToStaff(staffList, staffName, clientList, clientName);
 			
 	}
 	
-	public static void addClientAssignedToIntern(ArrayList<Client> clientList, String clientName, ArrayList<Intern> internList, String internName, int expense) {
-		
+	public static void addAndAssignClientToIntern(ArrayList<Client> clientList, String clientName, ArrayList<Intern> internList, String internName, int expense) {
+		System.out.println("maybe1");
 		int clientIndex = returnClientIndex(clientList, clientName);
-		if(clientIndex == -1) {return;}	
+		if(clientIndex != -1) {
+			System.out.println("Client already exists");
+			return;}	
 		int internIndex = returnInternIndex(internList, internName);
-		if(clientIndex == -1) {return;}	
-		
-		Client newClient = new Client(clientList.get(clientIndex).name, expense, internList.get(internIndex));
-
+		if(internIndex == -1) {
+			System.out.println("intern does not exist");
+			return;}	
+		Client newClient = new Client(clientName, expense, internList.get(internIndex));
 		clientList.add(newClient);
-		addInternClient(internList, internName, clientList, clientName);
+		addClientToIntern(internList, internName, clientList, clientName);
 		
 	}
 	
@@ -556,7 +556,7 @@ public class Main {
 		for(int i=0; i<clientList.size(); i++) {
 			System.out.println("Name: " + clientList.get(i).name);
 			System.out.println("Fee Amount: " + clientList.get(i).paymentAmount);
-			System.out.println("Counselor Name: " + clientList.get(i).CounselorName);
+			System.out.println("Counselor Name: " + clientList.get(i).CounselorName + "\n");
 		}
 	}
 	
@@ -574,7 +574,7 @@ public class Main {
 		int clientIndex = returnClientIndex(clientList, clientName);
 		if(clientIndex == -1) {return;}	
 		
-		System.out.println("Client " + clientList.get(clientIndex).name + "counselor:  " + clientList.get(clientIndex).CounselorName);
+		System.out.println("Client " + clientList.get(clientIndex).name + " counselor:  " + clientList.get(clientIndex).CounselorName);
 	}
 	
 	//BANK FUNCTIONS

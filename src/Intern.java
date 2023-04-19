@@ -76,4 +76,8 @@ public class Intern {
 	public void deleteSupervisor() {
 		this.supervisor = null;
 	}
+	
+	public Staff returnSupervisor() {
+		return this.supervisor;
+	}
 }

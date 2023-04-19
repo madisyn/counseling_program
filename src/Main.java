@@ -12,7 +12,7 @@ public class Main {
 				ArrayList<Client> clientList = new ArrayList<Client>();
 				Bank bank1 = new Bank("Name", 250000);
 				
-				
+			
 				
 				
 
@@ -207,7 +207,6 @@ public class Main {
 		if(staffIndex==-1) {return;}
 		int internIndex = returnInternIndex(internList, internName);
 		if(internIndex==-1) {return;}
-		
 		staffList.get(staffIndex).deleteIntern(internList.get(internIndex));
 		
 		InternDeleteSupervisor(internList, internName);
@@ -248,8 +247,9 @@ public class Main {
 			return;}
 		ArrayList<Intern> internList = new ArrayList<>();
 		internList = staffList.get(staffIndex).getInternList();
+		System.out.println(staffName + "'s interns: ");
 		for(int i=0; i<internList.size(); i++) {
-			System.out.println(staffName + "'s intern: " + internList.get(i).name);
+			System.out.println(internList.get(i).name);
 		}
 		
 	}
@@ -348,13 +348,17 @@ public class Main {
 		if(internIndex == -1) {return;}	
 		int staffIndex = returnStaffIndex(staffList, staffName);
 		if(staffIndex == -1) {return;}	
+		deleteStaffsIntern(staffList, internList.get(internIndex).returnSupervisor().name, internList, internName);
 		internList.get(internIndex).changeSupervisor(staffList.get(staffIndex));
+		staffList.get(staffIndex).addIntern(internList.get(internIndex));
+		
 	}
 	
 	public static void InternDeleteSupervisor(ArrayList<Intern> internList, String internName) {
 		int internIndex = returnInternIndex(internList, internName);
 		if(internIndex == -1) {return;}	
 		
+		internList.get(internIndex).returnSupervisor().deleteIntern(internList.get(internIndex));
 		internList.get(internIndex).deleteSupervisor();
 	}
 	
@@ -394,7 +398,13 @@ public class Main {
 	public static void printInternList(ArrayList<Intern> internList) {
 		for(int i=0; i<internList.size(); i++) {
 			System.out.println("Name: " + internList.get(i).name);
-			System.out.println("Supervisor: " + internList.get(i).supervisor.name);
+			if(internList.get(i).supervisor == null) {
+				System.out.println("Supervisor: Not Assigned");
+			}
+			else {
+				System.out.println("Supervisor: " + internList.get(i).supervisor.name);
+			}
+			
 			System.out.println("Monthly Expense: " + internList.get(i).paymentAmount);
 		}
 	}
@@ -486,9 +496,6 @@ public class Main {
 		}
 				
 		clientList.remove(returnClientIndex(clientList, clientList.get(clientIndex).name));
-		
-		
-		
 		
 	}
 	

@@ -80,4 +80,5 @@ public class Intern {
 	public Staff returnSupervisor() {
 		return this.supervisor;
 	}
+	
 }

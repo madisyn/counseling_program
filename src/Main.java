@@ -4,15 +4,16 @@ import java.util.Scanner;
 
 
 public class Main {
+	
+	static ArrayList<Employee> employeeList = new ArrayList<Employee>();
+	static ArrayList<Staff> staffList = new ArrayList<Staff>();
+	static ArrayList<Intern> internList = new ArrayList<Intern>();
+	static ArrayList<Client> clientList = new ArrayList<Client>();
+	static Bank bank = new Bank("Name", 250000);
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-				ArrayList<Employee> employeeList = new ArrayList<Employee>();
-				ArrayList<Staff> staffList = new ArrayList<Staff>();
-				ArrayList<Intern> internList = new ArrayList<Intern>();
-				ArrayList<Client> clientList = new ArrayList<Client>();
-				Bank bank1 = new Bank("Name", 250000);
 				
-			
 				
 				
 
@@ -21,15 +22,15 @@ public class Main {
 		
 	//EMPLOYEE FUNCTIONS
 	
-	public static void addEmployee(ArrayList<Employee> employeeList, String name, int hourlyRate) {
+	public static void addEmployee(String name, int hourlyRate) {
 		Employee newEmployee = new Employee(name, hourlyRate);
 		employeeList.add(newEmployee);
 	}
 	
 
-	public static void deleteEmployee(ArrayList<Employee> employeeList, String EmployeeName) {
+	public static void deleteEmployee(String EmployeeName) {
 		
-		int index = returnEmployeeIndex(employeeList, EmployeeName);
+		int index = returnEmployeeIndex(EmployeeName);
 		if(index != -1) {
 			employeeList.remove(index);
 		}
@@ -43,15 +44,14 @@ public class Main {
 	 * Will check if employee was already paid if not then will check if bank has enough money
 	 * if the bank has enough money then money will be given to employee
 	 */
-	public static void payEmployee(ArrayList<Employee> employeeList, String name, Bank bank, int Month) {
+	public static void payEmployee(String name, int Month) {
 		
-		int index = returnEmployeeIndex(employeeList, name);
+		int index = returnEmployeeIndex(name);
 		
 		if(index != -1) {
 			if(bank.BankVerifySufficientFunds(employeeList.get(index).MonthlySalary) && (!employeeList.get(index).checkCompletedPaymentMonth(Month))){
 			bank.payEmployees(employeeList.get(index), Month);
 			System.out.println(employeeList.get(index).name + " was paid $" + employeeList.get(index).MonthlySalary);
-			System.out.println(employeeList.get(index).paid[Month]);
 			}
 			else if(!bank.BankVerifySufficientFunds(employeeList.get(index).MonthlySalary)) {
 				System.out.println("Bank does not have enough funds.  Please talk to manager");
@@ -67,9 +67,9 @@ public class Main {
 		
 	}
 	
-	public static void changeEmployeeHourlyRate(ArrayList<Employee> employeeList, String EmployeeName, int newRate) {
+	public static void changeEmployeeHourlyRate(String EmployeeName, int newRate) {
 		
-		int index = returnEmployeeIndex(employeeList, EmployeeName);
+		int index = returnEmployeeIndex(EmployeeName);
 		
 		if(index != -1) {
 			employeeList.get(index).changeHourlyRate(newRate);
@@ -80,8 +80,8 @@ public class Main {
 		
 	}
 	
-	public static void recordEmployeeHours(ArrayList<Employee> employeeList, String EmployeeName, int hours) {
-		int index = returnEmployeeIndex(employeeList, EmployeeName);
+	public static void recordEmployeeHours(String EmployeeName, int hours) {
+		int index = returnEmployeeIndex(EmployeeName);
 		
 		if(index != -1) {
 			employeeList.get(index).addHours(hours);
@@ -92,8 +92,8 @@ public class Main {
 	}
 	
 	
-	public static void restartEmployeeWeeklyHours(ArrayList<Employee> employeeList, String EmployeeName) {
-		int index = returnEmployeeIndex(employeeList, EmployeeName);
+	public static void restartEmployeeWeeklyHours(String EmployeeName) {
+		int index = returnEmployeeIndex(EmployeeName);
 		
 		if(index != -1) {
 			employeeList.get(index).restartHours();
@@ -103,8 +103,8 @@ public class Main {
 		}
 	}
 	
-	public static void restartEmployeeMonthlyHours(ArrayList<Employee> employeeList, String EmployeeName) {
-		int index = returnEmployeeIndex(employeeList, EmployeeName);
+	public static void restartEmployeeMonthlyHours(String EmployeeName) {
+		int index = returnEmployeeIndex(EmployeeName);
 		
 		if(index != -1) {
 			employeeList.get(index).restartMonthlyHours();
@@ -115,7 +115,7 @@ public class Main {
 	}
 
 	
-	public static void printEmployeeList(ArrayList<Employee> employeeList) {
+	public static void printEmployeeList() {
 		for(int i=0; i<employeeList.size(); i++) {
 			System.out.println("name: " + employeeList.get(i).name);
 			System.out.println("work type: " + employeeList.get(i).workType);
@@ -129,13 +129,12 @@ public class Main {
 	/*
 	 * checks if employee is in the arrayList as well as returns its index-1
 	 */
-	public static int returnEmployeeIndex(ArrayList<Employee> employeeList, String EmployeeName) {
+	public static int returnEmployeeIndex(String EmployeeName) {
 		for(int i=0; i<employeeList.size(); i++) {
 			if(employeeList.get(i).name.equals(EmployeeName)){
 				return i;
 			}
 		}
-		System.out.println("Employee does not exist.  Please enter a valid Employee name");
 		return -1;
 	}
 	
@@ -471,7 +470,7 @@ public class Main {
 		if(clientIndex == -1) {return;}	
 		
 		
-		//need to delete client from employee or interns as well as the arraylist
+		//need to delete client from staff or interns as well as the arraylist
 		String counselorName = clientList.get(clientIndex).getClientsCounselor();
 		int index;
 		//if the counselor is an intern

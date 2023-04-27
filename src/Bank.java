@@ -48,7 +48,7 @@ public class Bank {
 	/*
 	 * This is to void a payment due to any errors for Clients
 	 */
-	public void voidReceivePayment(Client name, int month, int week) {
+	public void voidClientPayment(Client name, int month, int week) {
 		//receive money from Client
 		this.total -= name.paymentAmount;
 		

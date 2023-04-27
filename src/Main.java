@@ -12,9 +12,8 @@ public class Main {
 	static Bank bank = new Bank("Name", 250000);
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-			
-		
+
+
 	}
 
 		
@@ -356,6 +355,7 @@ public class Main {
 			System.out.println("Client does not exist");
 			return;}	
 		internList.get(internIndex).deleteClient(clientList.get(clientIndex));
+		deleteClientsCounselor(clientName);
 	}
 	
 	public static void InternChangeSupervisor(String staffName, String internName) {
@@ -374,31 +374,38 @@ public class Main {
 	//removes supervisor name but does not delete Supervisor from database
 	public static void InternDeleteSupervisor(String internName) {
 		int internIndex = returnInternIndex(internName);
-		if(internIndex == -1) {return;}	
+		if(internIndex == -1) {
+			System.out.println("Intern does not exist");
+			return;}	
 		
 		internList.get(internIndex).returnSupervisor().deleteIntern(internList.get(internIndex));
 		internList.get(internIndex).deleteSupervisor();
 	}
 	
-	public static void receivePaymenFromIntern(String internName, Bank bank, int month){
+	public static void receivePaymentFromIntern(String internName, int month){
 		int internIndex = returnInternIndex(internName);
-		if(internIndex == -1) {return;}	
+		if(internIndex == -1) {
+			System.out.println("Intern does not exist");
+			return;
+			}	
 		
 		if(!internList.get(internIndex).checkCompletedPaymentMonth(month)) {
 			bank.receivePayment(internList.get(internIndex), month);
-			System.out.println("Intern " + internList.get(internIndex).name + " payment received");
+			System.out.println("Payment received from Intern: " + internList.get(internIndex).name );
 		}
 		else {
 			System.out.println("Intern " +internList.get(internIndex).name +" has already made a payment for this month.  Please select a correct month");
 		}
 	}
 	
-	public static void voidInternMonthlyPayment(String internName, Bank bank, int month) {
+	public static void voidInternMonthlyPayment(String internName,int month) {
 		int internIndex = returnInternIndex(internName);
-		if(internIndex == -1) {return;}	
+		if(internIndex == -1) {
+			System.out.println("Intern does not exist");
+			return;}	
 		
 		if(internList.get(internIndex).checkCompletedPaymentMonth(month) == true) {
-			internList.get(internIndex).voidMonthlyExpense(month);
+			bank.voidInternPayment(internList.get(internIndex), month);
 			System.out.println("Payment for client " + internList.get(internIndex).name + " on month: " + month + " voided.");
 		}
 		else {
@@ -408,7 +415,9 @@ public class Main {
 	
 	public static void changeInternFee(String internName, int feeChange) {
 		int internIndex = returnInternIndex(internName);
-		if(internIndex == -1) {return;}	
+		if(internIndex == -1) {
+			System.out.println("Intern does not exist");
+			return;}	
 		internList.get(internIndex).changePaymentAmount(feeChange);
 	}
 	
@@ -423,7 +432,7 @@ public class Main {
 				System.out.println("Supervisor: " + internList.get(i).supervisor.name);
 			}
 			
-			System.out.println("Monthly Expense: " + internList.get(i).paymentAmount + "\n");
+			System.out.println("Monthly Intern Fee: " + internList.get(i).paymentAmount + "\n");
 		}
 	}
 	
@@ -482,9 +491,11 @@ public class Main {
 		
 	}
 	
-	public static void deleteClient(String clientName, ArrayList<Staff> staffList) {
+	public static void deleteClient(String clientName) {
 		int clientIndex = returnClientIndex(clientName);
-		if(clientIndex == -1) {return;}	
+		if(clientIndex == -1) {
+			System.out.println("Client does not exist");
+			return;}	
 		
 		
 		//need to delete client from staff or interns as well as the arraylist
@@ -538,7 +549,7 @@ public class Main {
 	}
 	
 	
-	public static void clientMakesPayment(String clientName, Bank bank, int month, int week){
+	public static void clientMakePayment(String clientName,int month, int week){
 		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
 		
@@ -551,12 +562,14 @@ public class Main {
 		}
 	}
 	
-	public static void voidClientPayment(String clientName, Bank bank, int month, int week) {
+	public static void voidClientPayment(String clientName, int month, int week) {
 		int clientIndex = returnClientIndex(clientName);
-		if(clientIndex == -1) {return;}	
+		if(clientIndex == -1) {
+			System.out.println("Client Does not exist");
+			return;}	
 		
 		if(clientList.get(clientIndex).checkCompletedPaymentWeek(month, week) == true) {
-			clientList.get(clientIndex).voidExpense(month, week);
+			bank.voidClientPayment(clientList.get(clientIndex), month, week);
 			System.out.println("Payment for client " + clientList.get(clientIndex).name + " on month: " + month + " week: " + week + " voided.");
 		}
 		else {
@@ -566,7 +579,9 @@ public class Main {
 	
 	public static void clientChangeFee(String clientName, int chengeFeeAmount) {
 		int clientIndex = returnClientIndex(clientName);
-		if(clientIndex == -1) {return;}	
+		if(clientIndex == -1) {
+			System.out.println("Client does not exist");
+			return;}	
 		
 		clientList.get(clientIndex).changePaymentFee(chengeFeeAmount);
 	}
@@ -590,9 +605,17 @@ public class Main {
 	
 	public static void printClientCounselorName(String clientName) {
 		int clientIndex = returnClientIndex(clientName);
-		if(clientIndex == -1) {return;}	
+		if(clientIndex == -1) {
+			System.out.println("Client does not exits");
+			return;}	
 		
-		System.out.println("Client " + clientList.get(clientIndex).name + " counselor:  " + clientList.get(clientIndex).CounselorName);
+		if(clientList.get(clientIndex).CounselorName == null) {
+			System.out.println("Client " + clientList.get(clientIndex).name + " has not been assigned a counselor at this time");
+		}
+		else {
+			System.out.println("Client " + clientList.get(clientIndex).name + " counselor:  " + clientList.get(clientIndex).CounselorName);
+		}
+		
 	}
 	
 	//BANK FUNCTIONS

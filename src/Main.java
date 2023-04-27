@@ -13,10 +13,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-				
-				
-				
-
+			
+		
 	}
 
 		
@@ -140,34 +138,34 @@ public class Main {
 	
 	//STAFF FUNCTIONS
 	
-	public static void addStaff(ArrayList<Staff> staffList, String name, int salary) {
+	public static void addStaff(String name, int salary) {
 		Staff newStaff = new Staff(name, salary);
 		staffList.add(newStaff);
 	}
 	
 	/*
-	 * When we delete a staff, we need to delete that the staff is in charge of any interns and that they are assigned to clients
+	 * When we delete a staff, we need to delete that the staff in charge of any interns and that they are assigned to clients
 	 */
-	public static void deleteStaff(ArrayList<Staff> staffList, String staffName) {
+	public static void deleteStaff(String staffName) {
 		
-		int index = returnStaffIndex(staffList, staffName);
+		int index = returnStaffIndex(staffName);
 		if(index == -1) {return;}
 		
 		//delete the staff that are assigned to any interns
-		ArrayList<Intern> internList = new ArrayList<>();
-		internList = staffList.get(index).getInternList();
+		ArrayList<Intern> tempInternList = new ArrayList<>();
+		tempInternList = staffList.get(index).getInternList();
 		
-		for(int i =0; i <internList.size(); i++) {
-			internList.get(i).deleteSupervisor();
+		for(int i =0; i <tempInternList.size(); i++) {
+			tempInternList.get(i).deleteSupervisor();
 		}
 			
 			
 		//deletes the staff from every client the staff has
-		ArrayList<Client> clientList = new ArrayList<>();
-		clientList = staffList.get(index).getClientList();
+		ArrayList<Client> tempClientList = new ArrayList<>();
+		tempClientList = staffList.get(index).getClientList();
 		
-		for(int i=0; i<clientList.size(); i++) {
-			DeleteClientsCounselor(clientList, clientList.get(i).name);
+		for(int i=0; i<tempClientList.size(); i++) {
+			deleteClientsCounselor(tempClientList.get(i).name);
 		}
 			
 			staffList.remove(index);
@@ -175,50 +173,54 @@ public class Main {
 		
 	}
 	
-	public static void removeClientConnectedToStaff(ArrayList<Staff> staffList, String staffName, ArrayList<Client> clientList, String clientName) {
-		int staffIndex = returnStaffIndex(staffList, staffName);
+	public static void removeClientConnectedToStaff(String staffName,String clientName) {
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex==-1) {return;	}
-		int clientIndex = returnClientIndex(clientList, clientName);
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex==-1) {return;}
 		staffList.get(staffIndex).deleteClient(clientList.get(clientIndex));
-		DeleteClientsCounselor(clientList, clientName);
+		deleteClientsCounselor(clientName);
 	}
 	
-	public static void addClientToStaff(ArrayList<Staff> staffList, String staffName, ArrayList<Client> clientList, String clientName) {
-		int staffIndex = returnStaffIndex(staffList, staffName);
+	
+	//adds client to staffs clientList
+	public static void addClientToStaff(String staffName,String clientName) {
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex==-1) {return;}
-		int clientIndex = returnClientIndex(clientList, clientName);
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex==-1) {return;}
 		staffList.get(staffIndex).addClient(clientList.get(clientIndex));
+		clientList.get(clientIndex).changeCounselor(staffList.get(staffIndex));
 	}
 	
-	public static void addInternToStaff(ArrayList<Staff> staffList, String staffName, ArrayList<Intern> internList, String internName) {
-		int staffIndex = returnStaffIndex(staffList, staffName);
+	public static void addInternToStaff(String staffName,String internName) {
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex==-1) {return;}
-		int internIndex = returnInternIndex(internList, internName);
+		int internIndex = returnInternIndex(internName);
 		if(internIndex==-1) {return;}
 		staffList.get(staffIndex).addIntern(internList.get(internIndex));
 		
 	}
 	
-	public static void deleteStaffsIntern(ArrayList<Staff> staffList, String staffName, ArrayList<Intern> internList, String internName) {
-		int staffIndex = returnStaffIndex(staffList, staffName);
+	//deletes the staff as the Interns supervisor and removes the intern from staffs internList
+	public static void deleteStaffsIntern(String staffName,String internName) {
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex==-1) {return;}
-		int internIndex = returnInternIndex(internList, internName);
+		int internIndex = returnInternIndex(internName);
 		if(internIndex==-1) {return;}
 		staffList.get(staffIndex).deleteIntern(internList.get(internIndex));
 		
-		InternDeleteSupervisor(internList, internName);
+		internList.get(internIndex).deleteSupervisor();
 	}
 	
-	public static void changeStaffSalary(ArrayList<Staff> staffList, String staffName, int salaryChange) {
-		int staffIndex = returnStaffIndex(staffList, staffName);
+	public static void changeStaffSalary(String staffName, int salaryChange) {
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex==-1) {return;}
 		staffList.get(staffIndex).changeSalary(salaryChange);
 	}
 	
 
-	public static void printStaffList(ArrayList<Staff> staffList) {
+	public static void printStaffList() {
 		for(int i=0; i<staffList.size(); i++) {
 			System.out.println("name: " + staffList.get(i).name);
 			System.out.println("work type: " + staffList.get(i).workType);
@@ -226,35 +228,35 @@ public class Main {
 		}
 	}
 		
-	public static void printStaffClients(ArrayList<Staff> staffList, String staffName) {
-		int staffIndex = returnStaffIndex(staffList, staffName);
+	public static void printStaffClients(String staffName) {
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex==-1) {
 			System.out.println("Staff Does not exist.");
 			return;}
 		
-		ArrayList<Client> clientList = new ArrayList<>();
-		clientList = staffList.get(staffIndex).getClientList();
-		for(int i=0; i<clientList.size(); i++) {
-			System.out.println(staffName + "'s client: " + clientList.get(i).name);
+		ArrayList<Client> tempClientList = new ArrayList<>();
+		tempClientList = staffList.get(staffIndex).getClientList();
+		for(int i=0; i<tempClientList.size(); i++) {
+			System.out.println(staffName + "'s client: " + tempClientList.get(i).name);
 		}
 	}
 	
-	public static void printStaffInterns(ArrayList<Staff> staffList, String staffName) {
-		int staffIndex = returnStaffIndex(staffList, staffName);
+	public static void printStaffInterns(String staffName) {
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex==-1) {
 			System.out.println("Staff Does not exist.");
 			return;}
-		ArrayList<Intern> internList = new ArrayList<>();
-		internList = staffList.get(staffIndex).getInternList();
+		ArrayList<Intern> tempInternList = new ArrayList<>();
+		tempInternList = staffList.get(staffIndex).getInternList();
 		System.out.println(staffName + "'s interns: ");
-		for(int i=0; i<internList.size(); i++) {
-			System.out.println(internList.get(i).name);
+		for(int i=0; i<tempInternList.size(); i++) {
+			System.out.println(tempInternList.get(i).name);
 		}
 		
 	}
 	
-	public static Staff returnStaffMember(ArrayList<Staff> staffList, String name) {
-		int index = returnStaffIndex(staffList, name);
+	public static Staff returnStaffMember(String name) {
+		int index = returnStaffIndex(name);
 		
 		if(index != -1) {
 			return staffList.get(index);
@@ -263,7 +265,7 @@ public class Main {
 	}	
 	
 	
-	public static int returnStaffIndex(ArrayList<Staff> staffList, String name) {
+	public static int returnStaffIndex(String name) {
 		for(int i=0; i<staffList.size(); i++) {
 			if(staffList.get(i).name.equals(name)) {
 				return i;
@@ -275,94 +277,111 @@ public class Main {
 	
 	//INTERN FUNCTIONS
 	
-	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList, String internName, String StaffName) {
+	public static void addIntern(String internName, String StaffName) {
 		
-		int staffIndex = returnStaffIndex(staffList, StaffName);
+		int staffIndex = returnStaffIndex(StaffName);
 		if(staffIndex == -1) {
 			System.out.println("Staff does not exist.  Please enter valid staff");
 			return;
 			}		
+		int internIndex = returnInternIndex(internName);
+		if(internIndex != -1) {
+			System.out.println("Intern already exists");
+			return;
+		}
 		
-		Intern newIntern = new Intern(internName, returnStaffMember(staffList, StaffName));
+		Intern newIntern = new Intern(internName, returnStaffMember(StaffName));
 
 		internList.add(newIntern);
 		
-		addInternToStaff(staffList, StaffName, internList, internName);
+		addInternToStaff(StaffName,internName);
 		
 	}
 	
-	public static void addIntern(ArrayList<Intern> internList, ArrayList<Staff> staffList, String internName, String StaffName, int modification) {
+	public static void addIntern(String internName, String StaffName, int modification) {
 		
-		int staffIndex = returnStaffIndex(staffList, StaffName);
+		int staffIndex = returnStaffIndex(StaffName);
 		if(staffIndex == -1) {return;}	
 		
-		Intern newIntern = new Intern(internName, returnStaffMember(staffList, StaffName), modification);
+		Intern newIntern = new Intern(internName, returnStaffMember(StaffName), modification);
 
 		internList.add(newIntern);
-		addInternToStaff(staffList, StaffName, internList, internName);
+		addInternToStaff(StaffName,internName);
 		
 	}
 	
 	/*
 	 * Delete intern from Staff and Clients that they are assigned to
 	 */
-	public static void deleteIntern(ArrayList<Staff> staffList, ArrayList<Intern> internList, String internName) {
+	public static void deleteIntern(String internName) {
 				
 		//deletes the intern from every client the intern has
-		int internIndex = returnInternIndex(internList, internName);
-		ArrayList<Client> clientList = new ArrayList<>();
-		clientList = internList.get(internIndex).getClientList();
+		int internIndex = returnInternIndex(internName);
+		ArrayList<Client> tempClientList = new ArrayList<>();
+		tempClientList = internList.get(internIndex).getClientList();
 		
-		for(int i=0; i<clientList.size(); i++) {
-			DeleteClientsCounselor(clientList, clientList.get(i).name);
+		for(int i=0; i<tempClientList.size(); i++) {
+			deleteClientsCounselor(tempClientList.get(i).name);
 		}
 		//deletes the intern from the staffs Intern List
-		deleteStaffsIntern(staffList, internList.get(internIndex).returnSupervisor().name, internList, internName);
+		deleteStaffsIntern(internList.get(internIndex).returnSupervisor().name, internName);
 		
 		internList.remove(internIndex);
 
 	}
 	
 	
-	public static void addClientToIntern(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
-		int internIndex = returnInternIndex(internList, internName);
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void addClientToIntern(String internName, String clientName) {
+		int internIndex = returnInternIndex(internName);
+		if(internIndex==-1) {
+			System.out.println("Intern does not exist");
+			return;
+		}
+		int clientIndex = returnClientIndex(clientName);
+		if(clientIndex==-1) {
+			System.out.println("Client does not exist");
+			return;
+		}
 		internList.get(internIndex).addClient(clientList.get(clientIndex));
+		clientList.get(clientIndex).changeCounselor(internList.get(internIndex));
 	}
 	
-	public static void removeInternsClient(ArrayList<Intern> internList, String internName, ArrayList<Client> clientList, String clientName) {
-		int internIndex = returnInternIndex(internList, internName);
+	public static void removeInternsClient(String internName, String clientName) {
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {
 			System.out.println("Intern does not exist");
 			return;}	
-		int clientIndex = returnClientIndex(clientList, clientName);
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {
 			System.out.println("Client does not exist");
 			return;}	
 		internList.get(internIndex).deleteClient(clientList.get(clientIndex));
 	}
 	
-	public static void InternChangeSupervisor(ArrayList<Staff> staffList, String staffName, ArrayList<Intern> internList, String internName) {
-		int internIndex = returnInternIndex(internList, internName);
+	public static void InternChangeSupervisor(String staffName, String internName) {
+		System.out.println("is it");
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {return;}	
-		int staffIndex = returnStaffIndex(staffList, staffName);
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex == -1) {return;}	
-		deleteStaffsIntern(staffList, internList.get(internIndex).returnSupervisor().name, internList, internName);
+		System.out.println("checking");
 		internList.get(internIndex).changeSupervisor(staffList.get(staffIndex));
 		staffList.get(staffIndex).addIntern(internList.get(internIndex));
+		System.out.println("check");
 		
 	}
 	
-	public static void InternDeleteSupervisor(ArrayList<Intern> internList, String internName) {
-		int internIndex = returnInternIndex(internList, internName);
+	//removes supervisor name but does not delete Supervisor from database
+	public static void InternDeleteSupervisor(String internName) {
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {return;}	
 		
 		internList.get(internIndex).returnSupervisor().deleteIntern(internList.get(internIndex));
 		internList.get(internIndex).deleteSupervisor();
 	}
 	
-	public static void receivePaymenFromIntern(ArrayList<Intern> internList, String internName, Bank bank, int month){
-		int internIndex = returnInternIndex(internList, internName);
+	public static void receivePaymenFromIntern(String internName, Bank bank, int month){
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {return;}	
 		
 		if(!internList.get(internIndex).checkCompletedPaymentMonth(month)) {
@@ -374,8 +393,8 @@ public class Main {
 		}
 	}
 	
-	public static void voidInternMonthlyPayment(ArrayList<Intern> internList, String internName, Bank bank, int month) {
-		int internIndex = returnInternIndex(internList, internName);
+	public static void voidInternMonthlyPayment(String internName, Bank bank, int month) {
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {return;}	
 		
 		if(internList.get(internIndex).checkCompletedPaymentMonth(month) == true) {
@@ -387,14 +406,14 @@ public class Main {
 		}
 	}	
 	
-	public static void changeInternFee(ArrayList<Intern> internList, String internName, int feeChange) {
-		int internIndex = returnInternIndex(internList, internName);
+	public static void changeInternFee(String internName, int feeChange) {
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {return;}	
 		internList.get(internIndex).changePaymentAmount(feeChange);
 	}
 	
 	
-	public static void printInternList(ArrayList<Intern> internList) {
+	public static void printInternList() {
 		for(int i=0; i<internList.size(); i++) {
 			System.out.println("Name: " + internList.get(i).name);
 			if(internList.get(i).supervisor == null) {
@@ -404,12 +423,12 @@ public class Main {
 				System.out.println("Supervisor: " + internList.get(i).supervisor.name);
 			}
 			
-			System.out.println("Monthly Expense: " + internList.get(i).paymentAmount);
+			System.out.println("Monthly Expense: " + internList.get(i).paymentAmount + "\n");
 		}
 	}
 	
-	public static void printInternClients(ArrayList<Intern> internList, String internName) {
-		int internIndex = returnInternIndex(internList, internName);
+	public static void printInternClients(String internName) {
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {return;}	
 		ArrayList<Client> clientList = new ArrayList<>();
 		clientList = internList.get(internIndex).getClientList();
@@ -419,54 +438,52 @@ public class Main {
 		}
 	}
 	
-	public static int returnInternIndex(ArrayList<Intern> internList, String name) {
+	public static int returnInternIndex(String name) {
 		for(int i=0; i<internList.size(); i++) {
 			if(internList.get(i).name.equals(name)) {
 				return i;
 			}
 		}
-		System.out.println("Intern does not exist.  Please enter a valid intern name");
 		return -1;
 	}
 	
 
 	//CLIENT FUNCTIONS
 	
-	public static void addClientAssignedToStaff(ArrayList<Client> clientList, String clientName, ArrayList<Staff> staffList, String staffName, int expense) {
+	public static void addClientAssignedToStaff(String clientName, String staffName, int expense) {
 		
-		int clientIndex = returnClientIndex(clientList, clientName);
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex != -1) {
 			System.out.println("Client already exists");
 			return;}	
-		int staffIndex = returnStaffIndex(staffList, staffName);
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex == -1) {
 			System.out.println("Staff does not exist");
 			return;}	
 
 		Client newClient = new Client(clientName, expense, staffList.get(staffIndex));
 		clientList.add(newClient);
-		addClientToStaff(staffList, staffName, clientList, clientName);
+		addClientToStaff(staffName, clientName);
 			
 	}
 	
-	public static void addAndAssignClientToIntern(ArrayList<Client> clientList, String clientName, ArrayList<Intern> internList, String internName, int expense) {
-		System.out.println("maybe1");
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void addAndAssignClientToIntern( String clientName, String internName, int expense) {
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex != -1) {
 			System.out.println("Client already exists");
 			return;}	
-		int internIndex = returnInternIndex(internList, internName);
+		int internIndex = returnInternIndex(internName);
 		if(internIndex == -1) {
 			System.out.println("intern does not exist");
 			return;}	
 		Client newClient = new Client(clientName, expense, internList.get(internIndex));
 		clientList.add(newClient);
-		addClientToIntern(internList, internName, clientList, clientName);
+		addClientToIntern(internName, clientName);
 		
 	}
 	
-	public static void deleteClient(ArrayList<Client> clientList, String clientName, ArrayList<Intern> internList, ArrayList<Staff> staffList) {
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void deleteClient(String clientName, ArrayList<Staff> staffList) {
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
 		
 		
@@ -476,7 +493,7 @@ public class Main {
 		//if the counselor is an intern
 		if(clientList.get(clientIndex).getCounselorType()) {
 			//find the intern and call delete interns client
-			index = returnInternIndex(internList, counselorName);
+			index = returnInternIndex(counselorName);
 			
 			if(index == -1) {
 				System.out.println("Counselor not in List.  Please enter a valid counselor");
@@ -486,7 +503,7 @@ public class Main {
 		}
 		else {
 			//find the staff and call delete staffs client
-			index = returnStaffIndex(staffList, counselorName);
+			index = returnStaffIndex(counselorName);
 			if(index == -1) {
 				System.out.println("Counselor not in List.  Please enter a valid counselor");
 				return;
@@ -494,39 +511,35 @@ public class Main {
 			staffList.get(index).deleteClient(clientList.get(clientIndex));
 		}
 				
-		clientList.remove(returnClientIndex(clientList, clientList.get(clientIndex).name));
+		clientList.remove(returnClientIndex(clientList.get(clientIndex).name));
 		
 	}
 	
-	public static void DeleteClientsCounselor(ArrayList<Client> clientList, String clientName) {
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void deleteClientsCounselor(String clientName) {
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
 		clientList.get(clientIndex).deleteCounselor();
 	}
 	
-	public static void ClientChangeInternCounselor(ArrayList<Client> clientList, String clientName, ArrayList<Intern> internList, String internName) {
-		int clientIndex = returnClientIndex(clientList, clientName);
-		if(clientIndex == -1) {return;}	
-		int internIndex = returnInternIndex(internList, clientName);
-		if(internIndex == -1) {return;}	
+	public static void clientChangeInternCounselor(String clientName, String internName) {
+		addClientToIntern(internName, clientName);
 
-
-		clientList.get(clientIndex).changeCounselor(internList.get(internIndex));
 	}
 	
-	public static void ClientChangeStaffCounselor(ArrayList<Client> clientList, String clientName, ArrayList<Staff> staffList, String staffName) {
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void clientChangeStaffCounselor(String clientName, String staffName) {
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
-		int staffIndex = returnStaffIndex(staffList, staffName);
+		int staffIndex = returnStaffIndex(staffName);
 		if(staffIndex == -1) {return;}	
 		
 		
 		clientList.get(clientIndex).changeCounselor(staffList.get(staffIndex));
+		staffList.get(staffIndex).addClient(clientList.get(clientIndex));
 	}
 	
 	
-	public static void ClientMakesPayment(ArrayList<Client> clientList, String clientName, Bank bank, int month, int week){
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void clientMakesPayment(String clientName, Bank bank, int month, int week){
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
 		
 		if(!clientList.get(clientIndex).checkCompletedPaymentWeek(month, week)) {
@@ -538,8 +551,8 @@ public class Main {
 		}
 	}
 	
-	public static void voidClientPayment(ArrayList<Client> clientList, String clientName, Bank bank, int month, int week) {
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void voidClientPayment(String clientName, Bank bank, int month, int week) {
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
 		
 		if(clientList.get(clientIndex).checkCompletedPaymentWeek(month, week) == true) {
@@ -551,14 +564,14 @@ public class Main {
 		}
 	}
 	
-	public static void clientChangeFee(ArrayList<Client> clientList, String clientName, int chengeFeeAmount) {
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void clientChangeFee(String clientName, int chengeFeeAmount) {
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
 		
 		clientList.get(clientIndex).changePaymentFee(chengeFeeAmount);
 	}
 	
-	public static void printClientList(ArrayList <Client> clientList) {
+	public static void printClientList() {
 		for(int i=0; i<clientList.size(); i++) {
 			System.out.println("Name: " + clientList.get(i).name);
 			System.out.println("Fee Amount: " + clientList.get(i).paymentAmount);
@@ -566,18 +579,17 @@ public class Main {
 		}
 	}
 	
-	public static int returnClientIndex(ArrayList<Client> clientList, String name) {
+	public static int returnClientIndex(String name) {
 		for(int i=0; i<clientList.size(); i++) {
 			if(clientList.get(i).name.equals(name)) {
 				return i;
 			}
 		}
-		System.out.println("Client does not exist.  Please enter a valid Client name");
 		return -1;
 	}
 	
-	public static void printClientCounselorName(ArrayList<Client> clientList, String clientName) {
-		int clientIndex = returnClientIndex(clientList, clientName);
+	public static void printClientCounselorName(String clientName) {
+		int clientIndex = returnClientIndex(clientName);
 		if(clientIndex == -1) {return;}	
 		
 		System.out.println("Client " + clientList.get(clientIndex).name + " counselor:  " + clientList.get(clientIndex).CounselorName);
@@ -585,12 +597,12 @@ public class Main {
 	
 	//BANK FUNCTIONS
 	
-	public static int getBankTotal(Bank bank) {
+	public static int getBankTotal() {
 		return bank.returnBankBalance();
 	}
 	
-	public static void printBankTotal(Bank bank) {
-		System.out.println("Bank Total: " + getBankTotal(bank));
+	public static void printBankTotal() {
+		System.out.println("Bank Total: " + getBankTotal());
 	}
 
 

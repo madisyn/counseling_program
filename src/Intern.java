@@ -37,6 +37,7 @@ public class Intern {
 	
 	public void voidMonthlyExpense(int month) {
 		paid[month] = false;
+		
 	}
 	
 	public void changeSupervisor(Staff name) {

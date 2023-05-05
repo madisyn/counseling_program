@@ -12,17 +12,22 @@ public class Main {
 	static Bank bank = new Bank("Name", 250000);
 	
 	public static void main(String[] args) {
+		start();
 		
+	    
+	    System.out.println("end");
+
+	}
+	public static void start() {
 		Scanner input = new Scanner(System.in); 
 	    String command = "";
 	    
-	    
-	    while(!command.equals("q")){
-	    	System.out.println("Enter Command.  q will quit out and h for a list of commands");
-	    	command = input.nextLine(); 
-	    	if(command.equals("q")) {
-	    		
-	    		System.out.println("program exited!");
+	    System.out.println("Enter Command.  q will quit out and h for a list of commands");
+	    command = input.nextLine(); 
+	    if(command.equals("q")) {	
+	    	System.out.println("program exited!");
+	    	input.close();
+	    	return;
 	    	}
 	    	else if(command.equals("h")) {
 	    		System.out.println("List of commands are:\n\n"
@@ -45,7 +50,12 @@ public class Main {
 	    		+ "BANK COMMANDS\n" + "printBankTotal");
 	    	}
 	    	else if(command.equals("addEmployee")) {
+	    		System.out.print("Enter new Employee name: ");
+	    		String name = input.nextLine(); 
+	    		System.out.print("Enter new Employee hourly rate: ");
+	    		int rate = input.nextInt();
 	    		
+	    		addEmployee(name, rate);
 	    	}
 			else if(command.equals("deleteEmployee")) {
 				    		
@@ -164,18 +174,19 @@ public class Main {
 			else if(command.equals("printBankTotal")) {
 				
 			}
-	    }
+			else {
+				System.out.println("Not one of the commands.  Please check spelling");
+			}
+	    	start();
 	    
-	    System.out.println("end");
-
 	}
-
 		
 	//EMPLOYEE FUNCTIONS
 	
 	public static void addEmployee(String name, int hourlyRate) {
 		Employee newEmployee = new Employee(name, hourlyRate);
 		employeeList.add(newEmployee);
+		System.out.println("added!");
 	}
 	
 

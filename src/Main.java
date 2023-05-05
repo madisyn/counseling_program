@@ -12,7 +12,43 @@ public class Main {
 	static Bank bank = new Bank("Name", 250000);
 	
 	public static void main(String[] args) {
-
+		
+		Scanner input = new Scanner(System.in); 
+	    String command = "";
+	    
+	    
+	    while(!command.equals("q")){
+	    	System.out.println("Enter Command.  q will quit out and h for a list of commands");
+	    	command = input.nextLine(); 
+	    	if(command.equals("q")) {
+	    		
+	    		System.out.println("program exited!");
+	    	}
+	    	else if(command.equals("h")) {
+	    		System.out.println("List of commands are:\n\n"
+	    		+ "EMPLOYEE COMMANDS\n"
+	    		+ "addEmployee\n" + "deleteEmployee\n" + "payEmployee\n" + "changeEmployeeHourlyRate\n"
+	    		+ "recordEmployeeHours\n" + "restartEmployeeWeeklyHours\n" + "restartEmployeeMonthlyHours\n"
+	    		+ "printEmployeeList\n\n"
+	    		+ "STAFF COMMANDS\n"
+	    		+ "addStaff\n" + "deleteStaff\n" + "removeClientConnectedToStaff\n" 
+	    		+ "addClientToStaff\n" + "addInternToStaff\n" + "deleteStaffsIntern\n" + "changeStaffSalary\n"
+	    		+ "printStaffList\n" + "printStaffClients\n" + "printStaffClients\n\n"
+	    		+ "INTERN COMMANDS\n"
+	    		+ "addIntern\n" + "deleteIntern\n" + "addClientToIntern\n" + "removeInternsClient\n" 
+	    		+ "InternChangeSupervisor\n" + "InternDeleteSupervisor\n" + "receivePaymentFromIntern\n"
+	    		+ "voidInternMonthlyPayment\n" + "changeInternFee\n" + "printInternList\n" + "printInternClients\n\n"
+	    		+ "CLIENT COMMANDS\n"
+	    		+ "addClientAssignedToStaff\n" + "addAndAssignClientToIntern\n" + "deleteClient\n" + "deleteClientsCounselor\n"
+	    		+ "clientChangeStaffCounselor\n"+ "clientMakePayment\n" + "voidClientPayment\n" + "clientChangeFee\n" 
+	    		+ "printClientList\n" + "printClientCounselorName\n\n"
+	    		+ "BANK COMMANDS\n" + "printBankTotal");
+	    		
+	    	}
+	    	
+	    }
+	    
+	    System.out.println("end");
 
 	}
 

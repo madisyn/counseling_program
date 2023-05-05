@@ -33,7 +33,7 @@ public class Main {
 	    		+ "STAFF COMMANDS\n"
 	    		+ "addStaff\n" + "deleteStaff\n" + "removeClientConnectedToStaff\n" 
 	    		+ "addClientToStaff\n" + "addInternToStaff\n" + "deleteStaffsIntern\n" + "changeStaffSalary\n"
-	    		+ "printStaffList\n" + "printStaffClients\n" + "printStaffClients\n\n"
+	    		+ "printStaffList\n" + "printStaffClients\n" + "printStaffInterns\n\n"
 	    		+ "INTERN COMMANDS\n"
 	    		+ "addIntern\n" + "deleteIntern\n" + "addClientToIntern\n" + "removeInternsClient\n" 
 	    		+ "InternChangeSupervisor\n" + "InternDeleteSupervisor\n" + "receivePaymentFromIntern\n"
@@ -43,9 +43,127 @@ public class Main {
 	    		+ "clientChangeStaffCounselor\n"+ "clientMakePayment\n" + "voidClientPayment\n" + "clientChangeFee\n" 
 	    		+ "printClientList\n" + "printClientCounselorName\n\n"
 	    		+ "BANK COMMANDS\n" + "printBankTotal");
+	    	}
+	    	else if(command.equals("addEmployee")) {
 	    		
 	    	}
-	    	
+			else if(command.equals("deleteEmployee")) {
+				    		
+				    	}
+			else if(command.equals("payEmployee")) {
+				
+			}
+			else if(command.equals("changeEmployeeHourlyRate")) {
+				
+			}
+			else if(command.equals("recordEmployeeHours")) {
+				
+			}
+			else if(command.equals("restartEmployeeWeeklyHours")) {
+				
+			}
+			else if(command.equals("restartEmployeeMonthlyHours")) {
+				
+			}
+			else if(command.equals("printEmployeeList")) {
+				
+			}
+			else if(command.equals("addStaff")) {
+				
+			}
+			else if(command.equals("deleteStaff")) {
+				
+			}
+			else if(command.equals("removeClientConnectedToStaff")) {
+				
+			}
+			else if(command.equals("addClientToStaff")) {
+				
+			}
+			else if(command.equals("addInternToStaff")) {
+				
+			}
+			else if(command.equals("deleteStaffsIntern")) {
+				
+			}
+			else if(command.equals("changeStaffSalary")) {
+				
+			}
+			else if(command.equals("printStaffList")) {
+				
+			}
+			else if(command.equals("printStaffClients")) {
+				
+			}
+			else if(command.equals("printStaffInterns")) {
+				
+			}
+			else if(command.equals("addIntern")) {
+				
+			}
+			else if(command.equals("deleteIntern")) {
+				
+			}
+			else if(command.equals("addClientToIntern")) {
+				
+			}
+			else if(command.equals("removeInternsClient")) {
+				
+			}
+			else if(command.equals("InternChangeSupervisor")) {
+				
+			}
+			else if(command.equals("InternDeleteSupervisor")) {
+				
+			}
+			else if(command.equals("receivePaymentFromIntern")) {
+				
+			}
+			else if(command.equals("voidInternMonthlyPayment")) {
+				
+			}
+			else if(command.equals("changeInternFee")) {
+				
+			}
+			else if(command.equals("printInternList")) {
+				
+			}
+			else if(command.equals("printInternClients")) {
+				
+			}
+			else if(command.equals("addClientAssignedToStaff")) {
+				
+			}
+			else if(command.equals("addAndAssignClientToIntern")) {
+				
+			}
+			else if(command.equals("deleteClient")) {
+				
+			}
+			else if(command.equals("deleteClientsCounselor")) {
+				
+			}
+			else if(command.equals("clientChangeStaffCounselor")) {
+				
+			}
+			else if(command.equals("clientMakePayment")) {
+				
+			}
+			else if(command.equals("voidClientPayment")) {
+				
+			}
+			else if(command.equals("clientChangeFee")) {
+				
+			}
+			else if(command.equals("printClientList")) {
+				
+			}
+			else if(command.equals("printClientCounselorName")) {
+				
+			}
+			else if(command.equals("printBankTotal")) {
+				
+			}
 	    }
 	    
 	    System.out.println("end");

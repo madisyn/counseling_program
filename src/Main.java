@@ -11,7 +11,8 @@ public class Main {
 	static ArrayList<Client> clientList = new ArrayList<Client>();
 	static Bank bank = new Bank("Name", 250000);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
+		
 		start();
 		
 	    
@@ -297,7 +298,7 @@ public class Main {
 	    		int month = input.nextInt();
 	    		System.out.print("Enter payment week: ");
 	    		int week = input.nextInt();
-	    		clientMakePayment(clientName, month, week);
+	    		voidClientPayment(clientName, month, week);
 			}
 			else if(command.equals("clientChangeFee")) {
 				System.out.print("Enter Client name: ");

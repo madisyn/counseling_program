@@ -58,126 +58,270 @@ public class Main {
 	    		addEmployee(name, rate);
 	    	}
 			else if(command.equals("deleteEmployee")) {
-				    		
+				System.out.print("Enter Employee name: ");
+	    		String name = input.nextLine(); 
+	    		deleteEmployee(name);
 				    	}
 			else if(command.equals("payEmployee")) {
-				
+				System.out.print("Enter Employee name: ");
+	    		String name = input.nextLine(); 
+	    		System.out.print("Enter the month the Employee is being paid for: ");
+	    		int month = input.nextInt();
+	    		payEmployee(name, month);
 			}
 			else if(command.equals("changeEmployeeHourlyRate")) {
-				
+				System.out.print("Enter Employee name: ");
+	    		String name = input.nextLine(); 
+	    		System.out.print("Enter new Hourly Rate: ");
+	    		int newRate = input.nextInt();
+	    		changeEmployeeHourlyRate(name, newRate);
 			}
 			else if(command.equals("recordEmployeeHours")) {
-				
+				System.out.print("Enter Employee name: ");
+	    		String name = input.nextLine(); 
+	    		System.out.print("Enter new Hours to record: ");
+	    		int hours = input.nextInt();
+	    		recordEmployeeHours(name, hours);
 			}
 			else if(command.equals("restartEmployeeWeeklyHours")) {
-				
+				System.out.print("Enter Employee name: ");
+	    		String name = input.nextLine(); 
+	    		restartEmployeeWeeklyHours(name);
 			}
 			else if(command.equals("restartEmployeeMonthlyHours")) {
-				
+				System.out.print("Enter Employee name: ");
+	    		String name = input.nextLine(); 
+	    		restartEmployeeMonthlyHours(name);
 			}
 			else if(command.equals("printEmployeeList")) {
-				
+				printEmployeeList();
 			}
 			else if(command.equals("addStaff")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String name = input.nextLine(); 
+	    		System.out.print("Enter salary: ");
+	    		int salary = input.nextInt();
+	    		addStaff(name, salary);
 			}
 			else if(command.equals("deleteStaff")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String name = input.nextLine(); 
+	    		deleteStaff(name);
 			}
 			else if(command.equals("removeClientConnectedToStaff")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		System.out.print("Enter client name: ");
+	    		String clientName = input.nextLine(); 
+	    		removeClientConnectedToStaff(staffName, clientName);
 			}
 			else if(command.equals("addClientToStaff")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		System.out.print("Enter client name: ");
+	    		String clientName = input.nextLine(); 
+	    		addClientToStaff(staffName, clientName);
 			}
 			else if(command.equals("addInternToStaff")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		System.out.print("Enter intern name: ");
+	    		String internName = input.nextLine(); 
+	    		addInternToStaff(staffName, internName);
 			}
 			else if(command.equals("deleteStaffsIntern")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		System.out.print("Enter intern name: ");
+	    		String internName = input.nextLine(); 
+	    		deleteStaffsIntern(staffName, internName);
 			}
 			else if(command.equals("changeStaffSalary")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		System.out.print("Enter intern name: ");
+	    		int salaryChange = input.nextInt(); 
+	    		changeStaffSalary(staffName, salaryChange);
 			}
 			else if(command.equals("printStaffList")) {
-				
+				printStaffList();
 			}
 			else if(command.equals("printStaffClients")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		printStaffClients(staffName);
 			}
 			else if(command.equals("printStaffInterns")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		printStaffInterns(staffName);
 			}
 			else if(command.equals("addIntern")) {
-				
+				System.out.println("Does the intern have a payment modification? (y/n)");
+				String answer= input.nextLine(); 
+				if(answer.contains("y")) {
+					System.out.print("Enter intern name: ");
+		    		String internName = input.nextLine(); 
+		    		System.out.print("Enter Staff name: ");
+		    		String staffName = input.nextLine(); 
+		    		System.out.print("Enter payment modification amount: ");
+		    		int modification = input.nextInt(); 
+		    		addIntern(internName, staffName, modification);
+				}
+				else if(answer.contains("n")) {
+				System.out.print("Enter intern name: ");
+	    		String internName = input.nextLine(); 
+	    		System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine(); 
+	    		addIntern(internName, staffName);
+				}
+				else {
+					System.out.println("Answer of 'y' or 'n' was not given.  Please try again");
+				}
 			}
 			else if(command.equals("deleteIntern")) {
-				
+				System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine(); 
+	    		deleteIntern(internName);
 			}
 			else if(command.equals("addClientToIntern")) {
-				
+				System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		addClientToIntern(internName, clientName);
 			}
 			else if(command.equals("removeInternsClient")) {
-				
+				System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		removeInternsClient(internName, clientName);
 			}
 			else if(command.equals("InternChangeSupervisor")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine();
+	    		System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		InternChangeSupervisor(staffName, internName);
 			}
 			else if(command.equals("InternDeleteSupervisor")) {
-				
+				System.out.print("Enter Staff name: ");
+	    		String internName = input.nextLine();
+	    		InternDeleteSupervisor(internName);
 			}
 			else if(command.equals("receivePaymentFromIntern")) {
-				
+				System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		System.out.print("Enter month intern is paying for: ");
+	    		int month = input.nextInt();
+	    		receivePaymentFromIntern(internName, month);
 			}
 			else if(command.equals("voidInternMonthlyPayment")) {
-				
+				System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		System.out.print("Enter month intern is voiding: ");
+	    		int month = input.nextInt();
+	    		voidInternMonthlyPayment(internName, month);
 			}
 			else if(command.equals("changeInternFee")) {
-				
+				System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		System.out.print("Enter new fee amount: ");
+	    		int feeChange = input.nextInt();
+	    		changeInternFee(internName, feeChange);
 			}
 			else if(command.equals("printInternList")) {
-				
+				printInternList();
 			}
 			else if(command.equals("printInternClients")) {
-				
+				System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		printInternClients(internName);
 			}
 			else if(command.equals("addClientAssignedToStaff")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		System.out.print("Enter Staff name: ");
+	    		String staffName = input.nextLine();
+	    		System.out.print("Enter fee amount: ");
+	    		int fee = input.nextInt();
+	    		addClientAssignedToStaff(clientName, staffName, fee);
 			}
 			else if(command.equals("addAndAssignClientToIntern")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		System.out.print("Enter fee amount: ");
+	    		int fee = input.nextInt();
+	    		addAndAssignClientToIntern(clientName, internName, fee);
 			}
 			else if(command.equals("deleteClient")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		deleteClient(clientName);
 			}
 			else if(command.equals("deleteClientsCounselor")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		deleteClientsCounselor(clientName);
+			}
+			else if(command.equals("clientChangeInternCounselor")) {
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		clientChangeInternCounselor(clientName, internName);
 			}
 			else if(command.equals("clientChangeStaffCounselor")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		System.out.print("Enter Intern name: ");
+	    		String internName = input.nextLine();
+	    		clientChangeStaffCounselor(clientName, internName);
 			}
 			else if(command.equals("clientMakePayment")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		System.out.print("Enter payment month: ");
+	    		int month = input.nextInt();
+	    		System.out.print("Enter payment week: ");
+	    		int week = input.nextInt();
+	    		clientMakePayment(clientName, month, week);
 			}
 			else if(command.equals("voidClientPayment")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		System.out.print("Enter payment month: ");
+	    		int month = input.nextInt();
+	    		System.out.print("Enter payment week: ");
+	    		int week = input.nextInt();
+	    		clientMakePayment(clientName, month, week);
 			}
 			else if(command.equals("clientChangeFee")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		System.out.print("Enter new fee: ");
+	    		int feeChange = input.nextInt();
+	    		clientChangeFee(clientName, feeChange);
 			}
 			else if(command.equals("printClientList")) {
-				
+				printClientList();
 			}
 			else if(command.equals("printClientCounselorName")) {
-				
+				System.out.print("Enter Client name: ");
+	    		String clientName = input.nextLine();
+	    		printClientCounselorName(clientName);
 			}
 			else if(command.equals("printBankTotal")) {
-				
+				printBankTotal();
 			}
 			else {
 				System.out.println("Not one of the commands.  Please check spelling");
 			}
 	    	start();
+	    	input.close();
 	    
 	}
 		
